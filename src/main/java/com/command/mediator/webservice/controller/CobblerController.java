@@ -9,13 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.command.mediator.handler.CobblerHandler;
 import com.command.mediator.pojo.CobblerResponse;
-import com.command.mediator.webservice.form.AnsibleForm;
-import com.command.mediator.webservice.form.BashForm;
+import com.command.mediator.webservice.form.CreateBareMetalServerForm;
 
 @RestController
 @RequestMapping(value = "/mediator/v1/cobbler", consumes = "application/json", produces = "application/json")
@@ -36,6 +34,13 @@ public class CobblerController {
 	public ResponseEntity<CobblerResponse> getCobblerProfiles() {
 		CobblerResponse response = cobblerHandler.getCobblerProfiles();
 		return new ResponseEntity<CobblerResponse>(response, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/server", method = RequestMethod.POST)
+	public ResponseEntity<String> createBareMetalServer(@RequestBody CreateBareMetalServerForm serverForm) {
+		LOGGER.info("Input server form : {}", serverForm);
+		String response = cobblerHandler.createBareMetalServer(serverForm);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 
 }

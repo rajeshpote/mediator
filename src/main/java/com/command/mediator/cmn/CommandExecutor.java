@@ -14,6 +14,7 @@ public class CommandExecutor {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommandExecutor.class);
 
 	public static String execute(String command) {
+		LOGGER.info("Executing command:{}", command);
 		StringBuilder sb = new StringBuilder();
 		String[] commands = new String[] { "/bin/bash", "-c", command };
 		BufferedReader stdInput = null;
@@ -49,7 +50,7 @@ public class CommandExecutor {
 				LOGGER.error("Error:{}", e);
 			}
 		}
-		LOGGER.info("Executed command:{} \n output:{}", command, sb);
+		LOGGER.info("Command output:{}", sb);
 		return sb.toString();
 	}
 
