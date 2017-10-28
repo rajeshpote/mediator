@@ -15,7 +15,7 @@ import com.command.mediator.webservice.form.BashForm;
 
 @RestController
 @RequestMapping(value = "/mediator/v1/execute", consumes = "application/json", produces = "application/json")
-public class MediatorController {
+public class MediatorController extends BaseController{
 
 	private static Logger LOGGER = LoggerFactory.getLogger(MediatorController.class);
 	
@@ -31,7 +31,7 @@ public class MediatorController {
 	public ResponseEntity<String> runBashCommand(@RequestBody BashForm bashForm) {
 		// TODO: run the bash script and return the result
 		LOGGER.info("Input bash form : {}", bashForm);
-		return new ResponseEntity<String>("Success", HttpStatus.OK);
+		return new ResponseEntity<String>("Success",addAccessControllAllowOrigin(), HttpStatus.OK);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class MediatorController {
 	public ResponseEntity<String> runAnsibleCommand(@RequestBody AnsibleForm ansibleForm) {
 		// TODO: run the ansible script and return the result
 		LOGGER.info("Input ansible form : {}", ansibleForm);
-		return new ResponseEntity<String>("Success", HttpStatus.OK);
+		return new ResponseEntity<String>("Success",addAccessControllAllowOrigin(), HttpStatus.OK);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class MediatorController {
 	public ResponseEntity<String> runQuery(@RequestParam(name = "vm_name") String vmName) {
 		// TODO: Query external API.
 		LOGGER.info("Input vm name : {}", vmName);
-		return new ResponseEntity<String>("Success", HttpStatus.OK);
+		return new ResponseEntity<String>("Success", addAccessControllAllowOrigin(),HttpStatus.OK);
 	}
 
 }

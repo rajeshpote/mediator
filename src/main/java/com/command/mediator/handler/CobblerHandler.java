@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.pojo.CobblerResponse;
@@ -48,34 +49,51 @@ public class CobblerHandler {
 		String command = getAddCobblerCommand(serverForm);
 		String output = commandExecutor.execute(command);
 		if(output == null || output.contains("exception on server")){
-			return "Failure";
+			return "{\"isSuccess\": false}";
 		}
 		//2nd command: cobbler system reboot --name=system-object-name
 		String rebbotOutput = commandExecutor.execute(COBBLER_REBOOT_COMMAND+serverForm.getName());
 		if(rebbotOutput == null || rebbotOutput.contains("failed to execute")){
-			return "Failure";
+			return "{\"isSuccess\": false}";
 		}
-		return "Success";
+		return "{\"isSuccess\": true}";
 	}
 
 	private String getAddCobblerCommand(CreateBareMetalServerForm serverForm) {
 		StringBuilder addCobblercommand = new StringBuilder("cobbler system add");
-		addCobblercommand.append(" --name=").append("\"").append(serverForm.getName()).append("\"");
-		addCobblercommand.append(" --hostname=").append("\"").append(serverForm.getHostname()).append("\"");
-		addCobblercommand.append(" --profile=").append("\"").append(serverForm.getCobblerProfile()).append("\"");
-		addCobblercommand.append(" --status=").append("\"").append(serverForm.getStatus()).append("\"");
-		addCobblercommand.append(" --kopts=").append("\"").append(serverForm.getKernelOptions()).append("\"");
-		addCobblercommand.append(" --kopts-post=").append("\"").append(serverForm.getKernelOptionsPost()).append("\"");
-		addCobblercommand.append(" --ksmeta=").append("\"").append(serverForm.getKickstartMetaData()).append("\"");
-		addCobblercommand.append(" --netboot-enabled=").append("\"").append(serverForm.getNetbootEnabled()).append("\"");
-		addCobblercommand.append(" --kickstart=").append("\"").append(serverForm.getKickstartFile()).append("\"");
-		addCobblercommand.append(" --comment=").append("\"").append(serverForm.getComment()).append("\"");
-		addCobblercommand.append(" --power-type=").append("\"").append(serverForm.getPowerManagement()).append("\"");
-		addCobblercommand.append(" --power-address=").append("\"").append(serverForm.getPowerManagementAddress()).append("\"");
-		addCobblercommand.append(" --power-user=").append("\"").append(serverForm.getUsername()).append("\"");
-		addCobblercommand.append(" --power-pass=").append("\"").append(serverForm.getPassword()).append("\"");
-		addCobblercommand.append(" --mac-address=").append("\"").append(serverForm.getMacAddress()).append("\"");
-		addCobblercommand.append(" --interface=").append("\"").append(serverForm.getServerInterface()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getName()))
+			addCobblercommand.append(" --name=").append("\"").append(serverForm.getName()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getHostname()))
+			addCobblercommand.append(" --hostname=").append("\"").append(serverForm.getHostname()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getCobblerProfile()))
+			addCobblercommand.append(" --profile=").append("\"").append(serverForm.getCobblerProfile()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getStatus()))
+			addCobblercommand.append(" --status=").append("\"").append(serverForm.getStatus()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getKernelOptions()))
+			addCobblercommand.append(" --kopts=").append("\"").append(serverForm.getKernelOptions()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getKernelOptionsPost()))
+			addCobblercommand.append(" --kopts-post=").append("\"").append(serverForm.getKernelOptionsPost()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getKickstartMetaData()))
+			addCobblercommand.append(" --ksmeta=").append("\"").append(serverForm.getKickstartMetaData()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getNetbootEnabled()))
+			addCobblercommand.append(" --netboot-enabled=").append("\"").append(serverForm.getNetbootEnabled()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getKickstartFile()))
+			addCobblercommand.append(" --kickstart=").append("\"").append(serverForm.getKickstartFile()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getComment()))
+			addCobblercommand.append(" --comment=").append("\"").append(serverForm.getComment()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getPowerManagement()))
+			addCobblercommand.append(" --power-type=").append("\"").append(serverForm.getPowerManagement()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getPowerManagementAddress()))
+			addCobblercommand.append(" --power-address=").append("\"").append(serverForm.getPowerManagementAddress()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getUsername()))
+			addCobblercommand.append(" --power-user=").append("\"").append(serverForm.getUsername()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getPassword()))
+			addCobblercommand.append(" --power-pass=").append("\"").append(serverForm.getPassword()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getMacAddress()))
+			addCobblercommand.append(" --mac-address=").append("\"").append(serverForm.getMacAddress()).append("\"");
+		if(!StringUtils.isEmpty(serverForm.getServerInterface()))
+			addCobblercommand.append(" --interface=").append("\"").append(serverForm.getServerInterface()).append("\"");
+		
 		return addCobblercommand.toString();
 	}
 }
