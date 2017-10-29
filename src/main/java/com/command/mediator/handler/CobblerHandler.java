@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.pojo.CobblerResponse;
+import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
 
 @Service
@@ -45,18 +46,18 @@ public class CobblerHandler {
 		return responseObj;
 	}
 
-	public String createBareMetalServer(CreateBareMetalServerForm serverForm) {
+	public BmResponse createBareMetalServer(CreateBareMetalServerForm serverForm) {
 		String command = getAddCobblerCommand(serverForm);
 		String output = commandExecutor.execute(command);
-		if(output == null || output.contains("exception on server")){
-			return "{\"isSuccess\": false}";
+		if(output != null && output.contains("exception on server")){
+			return new BmResponse(false,output);
 		}
 		//2nd command: cobbler system reboot --name=system-object-name
 		String rebbotOutput = commandExecutor.execute(COBBLER_REBOOT_COMMAND+serverForm.getName());
-		if(rebbotOutput == null || rebbotOutput.contains("failed to execute")){
-			return "{\"isSuccess\": false}";
+		if(rebbotOutput != null && rebbotOutput.contains("failed to execute")){
+			return new BmResponse(false,output);
 		}
-		return "{\"isSuccess\": true}";
+		return new BmResponse(true,rebbotOutput);
 	}
 
 	private String getAddCobblerCommand(CreateBareMetalServerForm serverForm) {

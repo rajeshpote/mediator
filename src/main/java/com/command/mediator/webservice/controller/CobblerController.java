@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.command.mediator.handler.CobblerHandler;
 import com.command.mediator.pojo.CobblerResponse;
+import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
 
 @RestController
@@ -29,20 +30,20 @@ public class CobblerController  extends BaseController{
 	@RequestMapping(value = "/kickstart", method = RequestMethod.GET)
 	public ResponseEntity<CobblerResponse> getKickstartFiles() {
 		CobblerResponse response = cobblerHandler.getKickStartFiles();
-		return new ResponseEntity<CobblerResponse>(response,addAccessControllAllowOrigin(), HttpStatus.OK);
+		return new ResponseEntity<CobblerResponse>(response, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public ResponseEntity<CobblerResponse> getCobblerProfiles() {
 		CobblerResponse response = cobblerHandler.getCobblerProfiles();
-		return new ResponseEntity<CobblerResponse>(response,addAccessControllAllowOrigin(), HttpStatus.OK);
+		return new ResponseEntity<CobblerResponse>(response, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/server", method = RequestMethod.POST)
-	public ResponseEntity<String> createBareMetalServer(@RequestBody CreateBareMetalServerForm serverForm) {
+	public ResponseEntity<BmResponse> createBareMetalServer(@RequestBody CreateBareMetalServerForm serverForm) {
 		LOGGER.info("Input server form : {}", serverForm);
-		String response = cobblerHandler.createBareMetalServer(serverForm);
-		return new ResponseEntity<String>(response, addAccessControllAllowOrigin(),HttpStatus.OK);
+		BmResponse response = cobblerHandler.createBareMetalServer(serverForm);
+		return new ResponseEntity<BmResponse>(response, HttpStatus.OK);
 	}
 
 }
