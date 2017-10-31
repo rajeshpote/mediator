@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.command.mediator.cmn.CommandExecutor;
+import com.command.mediator.cmn.SaveProfiles;
 import com.command.mediator.pojo.CobblerResponse;
 import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
+import com.command.mediator.webservice.form.ProfileForm;
 
 @Service
 public class CobblerHandler extends BaseHandler{
@@ -20,6 +22,9 @@ public class CobblerHandler extends BaseHandler{
 	
 	@Resource
 	private CommandExecutor commandExecutor;
+	
+	@Resource
+	private SaveProfiles saveProfiles;
 	
 	private String KICKSTART_DIR ="/var/lib/cobbler/kickstarts/";
 	private String CD_COMMAND ="cd ";
@@ -71,5 +76,53 @@ public class CobblerHandler extends BaseHandler{
 		}
 		return new BmResponse(true,output);
 	}
+
+	public BmResponse uploadImage(String fileName) {
+		LOGGER.info("fileName " +fileName);
+		// TODO: Upload image to location: /home/neo/iso-images
+		//Run mnt command to mount to path /mnt/neo
+		String output = fileName;
+		return new BmResponse(true,output);
+	}
+
+	public BmResponse getImageList() {
+		// TODO Auto-generated method stub
+		String output = "";
+		return new BmResponse(true,output);
+	}
+
+	public BmResponse saveBMProfile(ProfileForm profileForm) {
+		LOGGER.info("profileForm " +profileForm);
+		String output = saveProfiles.saveBMProfile(profileForm);
+		return new BmResponse(true, output);
+	}
 	
+	public BmResponse saveVMProfile(ProfileForm profileForm) {
+		LOGGER.info("profileForm " +profileForm);
+		String output = saveProfiles.saveVMProfile(profileForm);
+		return new BmResponse(true, output);
+	}
+
+	public BmResponse saveVMGroupProfile(ProfileForm profileForm) {
+		LOGGER.info("profileForm " +profileForm);
+		String output = saveProfiles.saveVMGroupProfile(profileForm);
+		return new BmResponse(true, output);
+	}
+
+	public BmResponse getProfileList() {
+		String output = saveProfiles.getProfileList();
+		LOGGER.info("output " +output);
+		return new BmResponse(true, output);
+	}
+
+	public BmResponse getBareMetalServerList() {
+		// TODO: from where we will get the the list of created BM serves.
+		return new BmResponse(true, "BM server");
+	}
+
+	public BmResponse getBMBridge(String serverName) {
+		// TODO: List of bridges for the selected bare metal server above
+		// from where we will get the the list of created BM bridges.
+		return new BmResponse(true, "BM bridges");
+	}
 }
