@@ -13,6 +13,7 @@ import com.command.mediator.pojo.CobblerResponse;
 import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
+import com.command.mediator.webservice.form.ImageForm;
 import com.command.mediator.webservice.form.ProfileForm;
 
 @Service
@@ -77,12 +78,11 @@ public class CobblerHandler extends BaseHandler{
 		return new BmResponse(true,output);
 	}
 
-	public BmResponse uploadImage(String fileName) {
-		LOGGER.info("fileName " +fileName);
+	public BmResponse uploadImage(ImageForm imageForm) {
+		LOGGER.info("uploaed image " +imageForm.getFileName());
 		// TODO: Upload image to location: /home/neo/iso-images
 		//Run mnt command to mount to path /mnt/neo
-		String output = fileName;
-		return new BmResponse(true,output);
+		return new BmResponse(true,imageForm.getFileName());
 	}
 
 	public BmResponse getImageList() {

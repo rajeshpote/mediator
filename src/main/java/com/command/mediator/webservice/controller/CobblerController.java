@@ -18,6 +18,7 @@ import com.command.mediator.handler.CobblerHandler;
 import com.command.mediator.pojo.CobblerResponse;
 import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
+import com.command.mediator.webservice.form.ImageForm;
 import com.command.mediator.webservice.form.ProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 
@@ -78,8 +79,8 @@ public class CobblerController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/image" , method = RequestMethod.POST)
-	public ResponseEntity<BmResponse> uploadImage(@RequestBody String fileName){
-		BmResponse response = cobblerHandler.uploadImage(fileName);
+	public ResponseEntity<BmResponse> uploadImage(@RequestBody ImageForm imageForm){
+		BmResponse response = cobblerHandler.uploadImage(imageForm);
 		return new ResponseEntity<BmResponse>(response,
 				response.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
 	}
