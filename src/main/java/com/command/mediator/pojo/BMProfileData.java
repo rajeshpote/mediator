@@ -1,43 +1,39 @@
-package com.command.mediator.webservice.form;
+package com.command.mediator.pojo;
+
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class ProfileForm {
-
-	/**
-	 * "Save all informaton to DB
-DB table:
-neo_profiles: id, name, desc, image_id <FK to image table>, 
-kickstart_file <entire raw file>, created_by, created_on
-neo_bm_profiles: id, neo_profiles_id, <all-other-information>"
-	*/
+@Document(collection = "bm_profiles")
+public class BMProfileData {
+	
 	@Id
 	private String id;
 	
-	@JsonProperty("name")
+	@Field(value = "name")
 	private String name;
 	
-	@JsonProperty("description")
+	@Field(value = "description")
 	private String description;
 	
-	@JsonProperty("imageId")
+	@Field(value = "imageId")
 	private String imageId;
 	
-	@JsonProperty("kickstartFile")
+	@Field(value = "kickstartFile")
 	private String kickstartFile;
 	
-	@JsonProperty("createdBy")
+	@Field(value = "createdBy")
 	private String createdBy;
 	
-	@JsonProperty("createdOn")
-	private String createdOn;
+	@Field(value = "createdOn")
+	private Date createdOn;
 	
-	@JsonProperty("createdBy")
+	@Field(value = "neoBmProfiles")
 	private String neoBmProfiles;
 
-	@JsonProperty("createdBy")
+	@Field(value = "neoProfilesId")
 	private String neoProfilesId;
 
 	public String getId() {
@@ -88,11 +84,11 @@ neo_bm_profiles: id, neo_profiles_id, <all-other-information>"
 		this.createdBy = createdBy;
 	}
 
-	public String getCreatedOn() {
+	public Date getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(String createdOn) {
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 

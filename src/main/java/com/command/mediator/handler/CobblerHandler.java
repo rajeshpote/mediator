@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.cmn.SaveProfiles;
+import com.command.mediator.mongo.NeoImageRepository;
 import com.command.mediator.pojo.CobblerResponse;
 import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
@@ -23,6 +24,9 @@ public class CobblerHandler extends BaseHandler{
 	
 	@Resource
 	private CommandExecutor commandExecutor;
+	
+	@Resource
+	private NeoImageRepository neoImageRepository;
 	
 	@Resource
 	private SaveProfiles saveProfiles;
@@ -78,24 +82,24 @@ public class CobblerHandler extends BaseHandler{
 		return new BmResponse(true,output);
 	}
 
-	public BmResponse uploadImage(ImageForm imageForm) {
-		LOGGER.info("uploaed image " +imageForm.getFileName());
-		// TODO: Upload image to location: /home/neo/iso-images
-		//Run mnt command to mount to path /mnt/neo
-		return new BmResponse(true,imageForm.getFileName());
-	}
+//	public BmResponse uploadImage(ImageForm imageForm) {
+//		LOGGER.info("uploaed image " +imageForm.getFileName());
+//		// TODO: Upload image to location: /home/neo/iso-images
+//		//Run mnt command to mount to path /mnt/neo
+//		return new BmResponse(true,imageForm.getFileName());
+//	}
+//
+//	public BmResponse getImageList() {
+//		// TODO Auto-generated method stub
+//		String output = "";
+//		return new BmResponse(true,output);
+//	}
 
-	public BmResponse getImageList() {
-		// TODO Auto-generated method stub
-		String output = "";
-		return new BmResponse(true,output);
-	}
-
-	public BmResponse saveBMProfile(ProfileForm profileForm) {
-		LOGGER.info("profileForm " +profileForm);
-		String output = saveProfiles.saveBMProfile(profileForm);
-		return new BmResponse(true, output);
-	}
+//	public BmResponse saveBMProfile(ProfileForm profileForm) {
+//		LOGGER.info("profileForm " +profileForm);
+//		String output = saveProfiles.saveBMProfile(profileForm);
+//		return new BmResponse(true, output);
+//	}
 	
 	public BmResponse saveVMProfile(ProfileForm profileForm) {
 		LOGGER.info("profileForm " +profileForm);
