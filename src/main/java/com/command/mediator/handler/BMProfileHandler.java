@@ -12,6 +12,7 @@ import com.command.mediator.mongo.BMProfileRepository;
 import com.command.mediator.pojo.BMProfileData;
 import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.controller.CobblerController;
+import com.command.mediator.webservice.form.ProfileForm;
 
 @Service
 public class BMProfileHandler {
@@ -21,18 +22,18 @@ public class BMProfileHandler {
 	@Resource
 	private BMProfileRepository bmProfileRepository;
 	
-	public BmResponse saveBMProfile(BMProfileData bmProfileData) {
+	public BmResponse saveBMProfile(ProfileForm profileForm) {
 		BMProfileData bmProfile = new BMProfileData();
-		bmProfile.setName(bmProfile.getName());
-		bmProfile.setDescription(bmProfile.getDescription());
-		bmProfile.setImageId(bmProfile.getImageId());
-		bmProfile.setKickstartFile(bmProfile.getKickstartFile());
-		bmProfile.setCreatedBy(bmProfile.getCreatedBy());
+		bmProfile.setName(profileForm.getName());
+		bmProfile.setDescription(profileForm.getDescription());
+		bmProfile.setImageId(profileForm.getImageId());
+		bmProfile.setKickstartFile(profileForm.getKickstartFile());
+		bmProfile.setCreatedBy(profileForm.getCreatedBy());
 		bmProfile.setCreatedOn(new Date());
-		bmProfile.setNeoBmProfiles(bmProfile.getNeoBmProfiles());
-		bmProfile.setNeoProfilesId(bmProfile.getNeoProfilesId());
-		
-		BMProfileData savedBMProfile = bmProfileRepository.insert(bmProfile);
+		bmProfile.setNeoBmProfiles(profileForm.getNeoBmProfiles());
+		bmProfile.setNeoProfilesId(profileForm.getNeoProfilesId());
+		LOGGER.info("Bm Prpfile name :" +profileForm.getName());
+		BMProfileData savedBMProfile = bmProfileRepository.save(bmProfile);
 		LOGGER.info("Bm Profile saved  " + savedBMProfile.toString());
 		return new BmResponse(true, savedBMProfile.toString());
 	}

@@ -34,10 +34,10 @@ neo_bm_profiles: id, neo_profiles_id, <all-other-information>"
 	@JsonProperty("createdOn")
 	private String createdOn;
 	
-	@JsonProperty("createdBy")
+	@JsonProperty("neoBmProfiles")
 	private String neoBmProfiles;
 
-	@JsonProperty("createdBy")
+	@JsonProperty("neoProfilesId")
 	private String neoProfilesId;
 
 	public String getId() {

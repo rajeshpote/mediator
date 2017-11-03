@@ -21,7 +21,7 @@ public class BMProfileData {
 	@Field(value = "imageId")
 	private String imageId;
 	
-	@Field(value = "kickstartFile")
+	@Field(value = "kickstarFile")
 	private String kickstartFile;
 	
 	@Field(value = "createdBy")

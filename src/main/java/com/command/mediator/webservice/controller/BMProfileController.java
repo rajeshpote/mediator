@@ -24,8 +24,8 @@ public class BMProfileController {
 	private BMProfileHandler bmProfileHandler;
 	
 	@RequestMapping(value = "/bm_profile" , method = RequestMethod.POST)
-	public ResponseEntity<BmResponse> saveBMProfile(@RequestBody BMProfileData bmProfileData){
-		BmResponse response = bmProfileHandler.saveBMProfile(bmProfileData);
+	public ResponseEntity<BmResponse> saveBMProfile(@RequestBody ProfileForm profileForm){
+		BmResponse response = bmProfileHandler.saveBMProfile(profileForm);
 		return new ResponseEntity<BmResponse>(response,
 				response.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
 	}
