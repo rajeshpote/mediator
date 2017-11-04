@@ -1,0 +1,40 @@
+package com.command.mediator.webservice.controller;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import com.command.mediator.handler.BmServerHandler;
+import com.command.mediator.model.MediatorResponseModel;
+import com.command.mediator.pojo.BmServerData;
+import com.command.mediator.webservice.form.AddBmServerForm;
+
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping(value = "/mediator/v1/bm_server", consumes = "application/json", produces = "application/json")
+public class BmController extends BaseController{
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(BmController.class);
+	
+	@Resource
+	private BmServerHandler bmServerHandler;
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<MediatorResponseModel> addBmServer(@RequestBody AddBmServerForm addBmServerForm) {
+		try {
+			BmServerData response = bmServerHandler.addBmServer(addBmServerForm);
+			return prepareSuccessResponse(response, 1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
+
+}

@@ -1,9 +1,18 @@
 package com.command.mediator.handler;
 
+import java.util.Date;
+
 import org.springframework.util.StringUtils;
 
+import com.command.mediator.pojo.BmServerData;
+import com.command.mediator.pojo.NeoBmProfileData;
+import com.command.mediator.pojo.NeoImageData;
+import com.command.mediator.pojo.NeoProfileData;
+import com.command.mediator.webservice.form.AddBmServerForm;
+import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
+import com.command.mediator.webservice.form.NeoImageForm;
 
 public class BaseHandler {
 
@@ -61,5 +70,46 @@ public class BaseHandler {
 		
 		return addCobblercommand.toString();
 	}
+	
+	public NeoProfileData createBmProfileObject(BmProfileForm profileForm){
+		NeoProfileData bmProfile = new NeoProfileData();
+		bmProfile.setName(profileForm.getName());
+		bmProfile.setDescription(profileForm.getDescription());
+		bmProfile.setImageId(profileForm.getImageId());
+		bmProfile.setKickstartFile(profileForm.getKickstartFile());
+		bmProfile.setCreatedBy(profileForm.getCreatedBy());
+		bmProfile.setCreatedOn(new Date());
+		return bmProfile;
+	}
+	
+	public NeoBmProfileData createBmNeoProfileObject(BmProfileForm profileForm, Integer neoProfileId){
+		NeoBmProfileData neoBmProfile = new NeoBmProfileData();
+		neoBmProfile.setNeoProfileId(neoProfileId);
+		neoBmProfile.setImageId(profileForm.getImageId());
+		neoBmProfile.setKvm(profileForm.getKvm());
+		neoBmProfile.setPackages(profileForm.getPackages());
+		return neoBmProfile;
+	}
+	
+	public NeoImageData createImageObject(NeoImageForm neoImageForm){
+		NeoImageData neoImage = new NeoImageData();
+		neoImage.setImageName(neoImageForm.getImageName());
+		neoImage.setDescription(neoImageForm.getDescription());
+		neoImage.setMountPath(neoImageForm.getMountPath());
+		neoImage.setIsoPath(neoImageForm.getIsoPath());
+		return neoImage;
+	}
 
+	public BmServerData createBmServerObject(AddBmServerForm addBmServerForm) {
+		BmServerData bmServer = new BmServerData();
+		bmServer.setName(addBmServerForm.getName());
+		bmServer.setInterfaceMac(addBmServerForm.getInterfaceMac());
+		bmServer.setPmName(addBmServerForm.getPmName());
+		bmServer.setPmAddress(addBmServerForm.getPmAddress());
+		bmServer.setPmType(addBmServerForm.getPmType());
+		bmServer.setPmPassword(addBmServerForm.getPmPassword());
+		bmServer.setCreatedDate(new Date());
+		bmServer.setStatus("unallocated");
+		return bmServer;
+	}
 }

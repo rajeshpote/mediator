@@ -1,27 +1,37 @@
 package com.command.mediator.pojo;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Document(collection = "neo_image")
+@Entity
+@Table(name = "neo_image")
 public class NeoImageData {
 	
 	@Id
-	@Field(value = "id")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
-	@Field(value = "name")
-	private String name;
+	@Column(name = "image_name")
+	@JsonProperty("image_name")
+	private String imageName;
 	
-	@Field(value = "description")
+	@Column(name = "description")
+	@JsonProperty("description")
 	private String description;
 	
-	@Field(value = "mount_path")
+	@Column(name = "mount_path")
+	@JsonProperty("mount_path")
 	private String mountPath;
 	
-	@Field(value = "isoPath")
+	@Column(name = "iso_path")
+	@JsonProperty("iso_path")
 	private String isoPath;
+	
 	
 	public String getIsoPath() {
 		return isoPath;
@@ -31,19 +41,22 @@ public class NeoImageData {
 		this.isoPath = isoPath;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	
+	public String getImageName() {
+		return imageName;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -60,7 +73,7 @@ public class NeoImageData {
 	
 	@Override
 	public String toString() {
-		return "NeoImageData [id=" + id + ", name=" + name + ", description=" + description + ", mountPath=" + mountPath
+		return "NeoImageData [id=" + id + ", imageName=" + imageName + ", description=" + description + ", mountPath=" + mountPath
 				+ ", isoPath=" + isoPath + "]";
 	}
 

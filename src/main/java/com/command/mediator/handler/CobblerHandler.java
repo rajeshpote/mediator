@@ -9,13 +9,13 @@ import org.springframework.util.StringUtils;
 
 import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.cmn.SaveProfiles;
-import com.command.mediator.mongo.NeoImageRepository;
+import com.command.mediator.persistent.NeoImageRepository;
 import com.command.mediator.pojo.CobblerResponse;
 import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
-import com.command.mediator.webservice.form.ImageForm;
-import com.command.mediator.webservice.form.ProfileForm;
+import com.command.mediator.webservice.form.NeoImageForm;
+import com.command.mediator.webservice.form.BmProfileForm;
 
 @Service
 public class CobblerHandler extends BaseHandler{
@@ -101,13 +101,13 @@ public class CobblerHandler extends BaseHandler{
 //		return new BmResponse(true, output);
 //	}
 	
-	public BmResponse saveVMProfile(ProfileForm profileForm) {
+	public BmResponse saveVMProfile(BmProfileForm profileForm) {
 		LOGGER.info("profileForm " +profileForm);
 		String output = saveProfiles.saveVMProfile(profileForm);
 		return new BmResponse(true, output);
 	}
 
-	public BmResponse saveVMGroupProfile(ProfileForm profileForm) {
+	public BmResponse saveVMGroupProfile(BmProfileForm profileForm) {
 		LOGGER.info("profileForm " +profileForm);
 		String output = saveProfiles.saveVMGroupProfile(profileForm);
 		return new BmResponse(true, output);

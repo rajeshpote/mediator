@@ -1,6 +1,7 @@
 package com.command.mediator.handler;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -8,34 +9,40 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.command.mediator.mongo.BMProfileRepository;
-import com.command.mediator.pojo.BMProfileData;
+import com.command.mediator.persistent.NeoBmProfileRepository;
+import com.command.mediator.persistent.NeoProfileRepository;
 import com.command.mediator.pojo.BmResponse;
+import com.command.mediator.pojo.NeoBmProfileData;
+import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.webservice.controller.CobblerController;
-import com.command.mediator.webservice.form.ProfileForm;
+import com.command.mediator.webservice.form.BmProfileForm;
 
 @Service
-public class BMProfileHandler {
+public class BMProfileHandler extends BaseHandler {
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(CobblerController.class);
 	
 	@Resource
-	private BMProfileRepository bmProfileRepository;
+	private NeoProfileRepository neoProfileRepository;
 	
-	public BmResponse saveBMProfile(ProfileForm profileForm) {
-		BMProfileData bmProfile = new BMProfileData();
-		bmProfile.setName(profileForm.getName());
-		bmProfile.setDescription(profileForm.getDescription());
-		bmProfile.setImageId(profileForm.getImageId());
-		bmProfile.setKickstartFile(profileForm.getKickstartFile());
-		bmProfile.setCreatedBy(profileForm.getCreatedBy());
-		bmProfile.setCreatedOn(new Date());
-		bmProfile.setNeoBmProfiles(profileForm.getNeoBmProfiles());
-		bmProfile.setNeoProfilesId(profileForm.getNeoProfilesId());
-		LOGGER.info("Bm Prpfile name :" +profileForm.getName());
-		BMProfileData savedBMProfile = bmProfileRepository.save(bmProfile);
-		LOGGER.info("Bm Profile saved  " + savedBMProfile.toString());
-		return new BmResponse(true, savedBMProfile.toString());
+	@Resource
+	private NeoBmProfileRepository neoBmProfileRepository;
+	
+	public NeoProfileData saveBMProfile(BmProfileForm profileForm) {
+		NeoProfileData bmProfile = createBmProfileObject(profileForm);
+		bmProfile = neoProfileRepository.save(bmProfile);
+		LOGGER.info("Neo Profile saved: {} " + bmProfile);
+		
+		NeoBmProfileData neoBmProfile = createBmNeoProfileObject(profileForm, bmProfile.getId());
+		neoBmProfile = neoBmProfileRepository.save(neoBmProfile);
+		LOGGER.info("Neo BM Profile saved: {} " + neoBmProfile);
+		return bmProfile;
+	}
+
+	public List<NeoProfileData> getNeoProfile() {
+		List<NeoProfileData> bmProfileList = (List<NeoProfileData>) neoProfileRepository.findAll();
+		LOGGER.info("Neo Profile list found: {} " + bmProfileList);
+		return bmProfileList;
 	}
 
 }

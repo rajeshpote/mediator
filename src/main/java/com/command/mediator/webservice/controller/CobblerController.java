@@ -18,8 +18,8 @@ import com.command.mediator.handler.CobblerHandler;
 import com.command.mediator.pojo.CobblerResponse;
 import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
-import com.command.mediator.webservice.form.ImageForm;
-import com.command.mediator.webservice.form.ProfileForm;
+import com.command.mediator.webservice.form.NeoImageForm;
+import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 
 @RestController
@@ -78,36 +78,15 @@ public class CobblerController extends BaseController {
 		}
 	}
 	
-//	@RequestMapping(value = "/image" , method = RequestMethod.POST)
-//	public ResponseEntity<BmResponse> uploadImage(@RequestBody ImageForm imageForm){
-//		BmResponse response = cobblerHandler.uploadImage(imageForm);
-//		return new ResponseEntity<BmResponse>(response,
-//				response.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-	
-//	@RequestMapping(value = "/image" , method = RequestMethod.GET)
-//	public ResponseEntity<BmResponse> getImageList(){
-//		BmResponse response = cobblerHandler.getImageList();
-//		return new ResponseEntity<BmResponse>(response,
-//				response.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-//	
-//	@RequestMapping(value = "/bm_profile" , method = RequestMethod.POST)
-//	public ResponseEntity<BmResponse> saveBMProfile(@RequestBody ProfileForm profileForm){
-//		BmResponse response = cobblerHandler.saveBMProfile(profileForm);
-//		return new ResponseEntity<BmResponse>(response,
-//				response.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-	
 	@RequestMapping(value = "/vm_profile" , method = RequestMethod.POST)
-	public ResponseEntity<BmResponse> saveVMProfile(@RequestBody ProfileForm profileForm){
+	public ResponseEntity<BmResponse> saveVMProfile(@RequestBody BmProfileForm profileForm){
 		BmResponse response = cobblerHandler.saveVMProfile(profileForm);
 		return new ResponseEntity<BmResponse>(response,
 				response.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@RequestMapping(value = "/vm_group_profile" , method = RequestMethod.POST)
-	public ResponseEntity<BmResponse> saveVMGroupProfile(@RequestBody ProfileForm profileForm){
+	public ResponseEntity<BmResponse> saveVMGroupProfile(@RequestBody BmProfileForm profileForm){
 		BmResponse response = cobblerHandler.saveVMGroupProfile(profileForm);
 		return new ResponseEntity<BmResponse>(response,
 				response.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);

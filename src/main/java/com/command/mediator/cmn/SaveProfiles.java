@@ -2,22 +2,22 @@ package com.command.mediator.cmn;
 
 import org.springframework.stereotype.Service;
 
-import com.command.mediator.webservice.form.ProfileForm;
+import com.command.mediator.webservice.form.BmProfileForm;
 
 @Service
 public class SaveProfiles {
 
-	public String saveBMProfile(ProfileForm profileForm) {
+	public String saveBMProfile(BmProfileForm profileForm) {
 		// TODO: Save all information to DB
 		return "BM profile saved";
 	}
 
-	public String saveVMProfile(ProfileForm profileForm) {
+	public String saveVMProfile(BmProfileForm profileForm) {
 		// TODO: Save all information to DB
 		return "VM profile saved";
 	}
 
-	public String saveVMGroupProfile(ProfileForm profileForm) {
+	public String saveVMGroupProfile(BmProfileForm profileForm) {
 		// TODO: Save all information to DB
 		return "VM group profile saved";
 	}
