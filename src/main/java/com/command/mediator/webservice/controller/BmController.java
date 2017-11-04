@@ -1,5 +1,7 @@
 package com.command.mediator.webservice.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -31,6 +33,17 @@ public class BmController extends BaseController{
 		try {
 			BmServerData response = bmServerHandler.addBmServer(addBmServerForm);
 			return prepareSuccessResponse(response, 1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<MediatorResponseModel> getBareMetalServerList() {
+		try {
+			List<BmServerData> bmServerList = bmServerHandler.getBmServer();
+			return prepareSuccessResponse(bmServerList, bmServerList.size());
 		} catch (Throwable e) {
 			e.printStackTrace();
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());

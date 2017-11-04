@@ -1,5 +1,7 @@
 package com.command.mediator.handler;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -22,5 +24,11 @@ public class BmServerHandler extends BaseHandler{
 		bmServer = bmServerRepository.save(bmServer);
 		LOGGER.info("BM Server added: {} " + bmServer);
 		return bmServer;
+	}
+
+	public List<BmServerData> getBmServer() {
+		List<BmServerData> bmServerList = (List<BmServerData>) bmServerRepository.findAll();
+		LOGGER.info("BM Server added: {} " + bmServerList);
+		return bmServerList;
 	}
 }
