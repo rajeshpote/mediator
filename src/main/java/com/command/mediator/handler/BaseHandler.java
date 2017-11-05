@@ -3,16 +3,17 @@ package com.command.mediator.handler;
 import java.util.Date;
 
 import org.springframework.util.StringUtils;
-
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
+import com.command.mediator.pojo.ProvisionBmServerData;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
 import com.command.mediator.webservice.form.NeoImageForm;
+import com.command.mediator.webservice.form.ProvisionBMServerForm;
 
 public class BaseHandler {
 
@@ -112,4 +113,13 @@ public class BaseHandler {
 		bmServer.setStatus("unallocated");
 		return bmServer;
 	}
+	
+	public ProvisionBmServerData bmServerProvision(ProvisionBMServerForm provisionBMProfileForm) {
+		ProvisionBmServerData provisionBmServerData = new ProvisionBmServerData();
+		provisionBmServerData.setSelectServer(provisionBMProfileForm.getSelectServer());
+		provisionBmServerData.setSelectProfileFile(provisionBMProfileForm.getSelectProfileFile());
+		provisionBmServerData.setAllProfileFields(provisionBMProfileForm.getAllProfileFields());
+		return provisionBmServerData;
+	}
+
 }

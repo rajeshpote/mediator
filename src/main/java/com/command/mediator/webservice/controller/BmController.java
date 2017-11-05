@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.BmServerHandler;
 import com.command.mediator.model.MediatorResponseModel;
+import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.pojo.BmServerData;
+import com.command.mediator.pojo.ProvisionBmServerData;
 import com.command.mediator.webservice.form.AddBmServerForm;
+import com.command.mediator.webservice.form.ProvisionBMServerForm;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -50,4 +53,14 @@ public class BmController extends BaseController{
 		}
 	}
 
+	@RequestMapping(value  = "provision" ,method = RequestMethod.POST)
+	public ResponseEntity<MediatorResponseModel> provisionBmServer(@RequestBody ProvisionBMServerForm provisionBMProfileForm) {
+		try {
+			ProvisionBmServerData response = bmServerHandler.provisionBmServer(provisionBMProfileForm);
+			return prepareSuccessResponse(response, 1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
 }

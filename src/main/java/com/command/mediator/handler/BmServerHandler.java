@@ -8,8 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.command.mediator.persistent.BmServerRepository;
+import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.pojo.BmServerData;
+import com.command.mediator.pojo.ProvisionBmServerData;
 import com.command.mediator.webservice.form.AddBmServerForm;
+import com.command.mediator.webservice.form.ProvisionBMServerForm;
 
 @Service
 public class BmServerHandler extends BaseHandler{
@@ -18,6 +21,9 @@ public class BmServerHandler extends BaseHandler{
 	
 	@Resource
 	private BmServerRepository bmServerRepository;
+	
+	//@Resource
+	//private ProvisionBmServer provisionBmServer;
 
 	public BmServerData addBmServer(AddBmServerForm addBmServerForm) {
 		BmServerData bmServer = createBmServerObject(addBmServerForm);
@@ -31,4 +37,12 @@ public class BmServerHandler extends BaseHandler{
 		LOGGER.info("BM Server added: {} " + bmServerList);
 		return bmServerList;
 	}
+
+	public ProvisionBmServerData provisionBmServer(ProvisionBMServerForm provisionBMProfileForm) {
+		ProvisionBmServerData provisionBmServerData = bmServerProvision(provisionBMProfileForm);
+		
+		return provisionBmServerData;
+	}
+
+	
 }
