@@ -132,4 +132,12 @@ public class BmServerData {
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
+
+	@Override
+	public String toString() {
+		return "BmServerData [id=" + id + ", name=" + name + ", interfaceMac=" + interfaceMac + ", pmType=" + pmType
+				+ ", pmAddress=" + pmAddress + ", pmName=" + pmName + ", pmPassword=" + pmPassword + ", status="
+				+ status + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + "]";
+	}
+	
 }

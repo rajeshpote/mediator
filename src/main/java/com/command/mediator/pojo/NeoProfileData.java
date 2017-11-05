@@ -36,14 +36,6 @@ public class NeoProfileData {
 	@JsonProperty("kickstart_file")
 	private String kickstartFile;
 	
-	@Column(name = "kvm")
-	@JsonProperty("kvm")
-	private String kvm;
-	
-	@Column(name = "packages")
-	@JsonProperty("packages")
-	private String packages;
-	
 	@Column(name = "created_by")
 	@JsonProperty("created_by")
 	private String createdBy;

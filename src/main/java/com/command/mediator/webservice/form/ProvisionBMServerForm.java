@@ -1,34 +1,32 @@
 package com.command.mediator.webservice.form;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProvisionBMServerForm {
 
-	@JsonProperty("select_profile_file")
-	private String selectProfileFile;
+	@JsonProperty("profile_id")
+	private String profileId;
 	
-	@JsonProperty("all_profile_fields")
-	private BmProfileForm allProfileFields;
+	@JsonProperty("server_id")
+	private List<String> serverId;
+
+	public String getProfileId() {
+		return profileId;
+	}
+
+	public void setProfileId(String profileId) {
+		this.profileId = profileId;
+	}
+
+	public List<String> getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(List<String> serverId) {
+		this.serverId = serverId;
+	}
 	
-	@JsonProperty("selectServer")
-	private String selectServer;
 	
-	public String getSelectProfileFile() {
-		return selectProfileFile;
-	}
-	public void setSelectProfileFile(String selectProfileFile) {
-		this.selectProfileFile = selectProfileFile;
-	}
-	public BmProfileForm getAllProfileFields() {
-		return allProfileFields;
-	}
-	public void setAllProfileFields(BmProfileForm allProfileFields) {
-		this.allProfileFields = allProfileFields;
-	}
-	public String getSelectServer() {
-		return selectServer;
-	}
-	public void setSelectServer(String selectServer) {
-		this.selectServer = selectServer;
-	}
 }

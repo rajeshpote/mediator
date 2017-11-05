@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.persistent.NeoImageRepository;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.webservice.form.NeoImageForm;
@@ -15,14 +17,21 @@ import com.command.mediator.webservice.form.NeoImageForm;
 public class NeoImageHandler extends BaseHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CobblerHandler.class);
+	
+	private String MOUNT_COMMAND = "./scripts/mountImage.sh";
 
 	@Resource
 	private NeoImageRepository neoImageRepository;
+	
+	@Resource
+	private CommandExecutor commandExecutor;
 
 	public NeoImageData uploadImage(NeoImageForm neoImageForm) {
 		NeoImageData neoImage = createImageObject(neoImageForm);
 		neoImage = neoImageRepository.save(neoImage);
-		LOGGER.info("Uploaed image: {} ", neoImage);
+		LOGGER.info("Running mount script");
+		commandExecutor.execute(MOUNT_COMMAND);
+		LOGGER.info("Mounted the image: {} ", neoImage);
 		return neoImage;
 	}
 

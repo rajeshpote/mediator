@@ -7,13 +7,11 @@ import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
-import com.command.mediator.pojo.ProvisionBmServerData;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
 import com.command.mediator.webservice.form.NeoImageForm;
-import com.command.mediator.webservice.form.ProvisionBMServerForm;
 
 public class BaseHandler {
 
@@ -96,8 +94,8 @@ public class BaseHandler {
 		NeoImageData neoImage = new NeoImageData();
 		neoImage.setImageName(neoImageForm.getImageName());
 		neoImage.setDescription(neoImageForm.getDescription());
-		neoImage.setMountPath(neoImageForm.getMountPath());
-		neoImage.setIsoPath(neoImageForm.getIsoPath());
+		neoImage.setMountPath("/mnt/neo");
+		neoImage.setIsoPath("/home/neo/iso-images");
 		return neoImage;
 	}
 
@@ -114,12 +112,5 @@ public class BaseHandler {
 		return bmServer;
 	}
 	
-	public ProvisionBmServerData bmServerProvision(ProvisionBMServerForm provisionBMProfileForm) {
-		ProvisionBmServerData provisionBmServerData = new ProvisionBmServerData();
-		provisionBmServerData.setSelectServer(provisionBMProfileForm.getSelectServer());
-		provisionBmServerData.setSelectProfileFile(provisionBMProfileForm.getSelectProfileFile());
-		provisionBmServerData.setAllProfileFields(provisionBMProfileForm.getAllProfileFields());
-		return provisionBmServerData;
-	}
 
 }
