@@ -30,7 +30,7 @@ public class NeoImageHandler extends BaseHandler {
 		NeoImageData neoImage = createImageObject(neoImageForm);
 		neoImage = neoImageRepository.save(neoImage);
 		LOGGER.info("Running mount script");
-		commandExecutor.execute(MOUNT_COMMAND);
+		CommandExecutor.execute(MOUNT_COMMAND + " " + neoImage.getImageName() + " " + neoImage.getId());
 		LOGGER.info("Mounted the image: {} ", neoImage);
 		return neoImage;
 	}
