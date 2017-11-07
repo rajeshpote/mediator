@@ -3,6 +3,8 @@ package com.command.mediator.webservice.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import com.command.mediator.model.ContentModel;
 import com.command.mediator.model.MediatorResponseModel;
@@ -59,5 +61,12 @@ public class BaseController {
 	        ServiceError errorObj = new ServiceError(errorMsg, status.value(), fieldName);
 	        MediatorResponseModel MediatorResponseModel = new MediatorResponseModel(null, metadataModel, errorObj);
 	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel, status);
+	    }
+	    
+	    public ResponseEntity<MediatorResponseModel> prepareValidationErrorResponse(BindingResult validationResults, long requestStartTime) {
+	        for (FieldError error : validationResults.getFieldErrors()) {
+	            return prepareErrorResponse(error.getObjectName() + " - " + error.getDefaultMessage(), HttpStatus.NOT_IMPLEMENTED, error.getField(), requestStartTime);
+	        }
+	        return null;
 	    }
 }

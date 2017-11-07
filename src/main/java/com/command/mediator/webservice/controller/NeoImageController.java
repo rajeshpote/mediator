@@ -3,9 +3,10 @@ package com.command.mediator.webservice.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,6 @@ import com.command.mediator.model.MediatorResponseModel;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.webservice.form.NeoImageForm;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/mediator/v1/image", consumes = "application/json", produces = "application/json")
@@ -26,8 +26,13 @@ public class NeoImageController extends BaseController {
 	private NeoImageHandler neoImageHandler;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<MediatorResponseModel> uploadImage(@RequestBody NeoImageForm neoImageForm) {
+	public ResponseEntity<MediatorResponseModel> uploadImage(@Valid @RequestBody NeoImageForm neoImageForm,
+			BindingResult validationResults) {
 		try {
+			if (validationResults.hasErrors()) {
+				// return prepareValidationErrorResponse(validationResults,
+				// requestStartTime);
+			}
 			NeoImageData data = neoImageHandler.uploadImage(neoImageForm);
 			return prepareSuccessResponse(data, 1);
 		} catch (Throwable e) {

@@ -3,9 +3,11 @@ package com.command.mediator.webservice.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +29,12 @@ public class ProfileController extends BaseController {
 	private BMProfileHandler bmProfileHandler;
 
 	@RequestMapping(value = "/bm", method = RequestMethod.POST)
-	public ResponseEntity<MediatorResponseModel> saveBmProfile(@RequestBody BmProfileForm profileForm) {
+	public ResponseEntity<MediatorResponseModel> saveBmProfile(@Valid @RequestBody BmProfileForm profileForm,
+			BindingResult validationResults) {
 		try {
+			if (validationResults.hasErrors()) {
+				//return prepareValidationErrorResponse(validationResults, requestStartTime);
+			}
 			NeoProfileData response = bmProfileHandler.saveBMProfile(profileForm);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
@@ -36,7 +42,7 @@ public class ProfileController extends BaseController {
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 	}
-	
+
 	@RequestMapping(value = "/bm", method = RequestMethod.GET)
 	public ResponseEntity<MediatorResponseModel> getBmProfile() {
 		try {

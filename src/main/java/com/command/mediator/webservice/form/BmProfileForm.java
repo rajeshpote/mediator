@@ -3,12 +3,15 @@ package com.command.mediator.webservice.form;
 
 import javax.persistence.Column;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BmProfileForm {
 
 
 	@JsonProperty("name")
+	@NotBlank(message = "profile name can not be null.")
 	private String name;
 	
 	@JsonProperty("description")

@@ -2,11 +2,14 @@ package com.command.mediator.webservice.form;
 
 import javax.persistence.Column;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NeoImageForm {
 	
 	@JsonProperty("image_name")
+	@NotBlank(message = "image name can not be null.")
 	private String imageName;
 	
 	@JsonProperty("description")
