@@ -24,6 +24,10 @@ public class NeoImageData {
 	@JsonProperty("description")
 	private String description;
 	
+	@Column(name = "os_type")
+	@JsonProperty("os_type")
+	private String osType;
+
 	@Column(name = "mount_path")
 	@JsonProperty("mount_path")
 	private String mountPath;
@@ -69,6 +73,14 @@ public class NeoImageData {
 	}
 	public void setMountPath(String mountPath) {
 		this.mountPath = mountPath;
+	}
+	
+	public String getOsType() {
+		return osType;
+	}
+
+	public void setOsType(String osType) {
+		this.osType = osType;
 	}
 	
 	@Override

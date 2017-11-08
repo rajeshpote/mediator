@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.command.mediator.handler.BMProfileHandler;
 import com.command.mediator.model.MediatorResponseModel;
-import com.command.mediator.pojo.BmResponse;
 import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.webservice.form.BmProfileForm;
 
@@ -33,7 +32,7 @@ public class ProfileController extends BaseController {
 			BindingResult validationResults) {
 		try {
 			if (validationResults.hasErrors()) {
-				//return prepareValidationErrorResponse(validationResults, requestStartTime);
+				return prepareValidationErrorResponse(validationResults, 0);
 			}
 			NeoProfileData response = bmProfileHandler.saveBMProfile(profileForm);
 			return prepareSuccessResponse(response, 1);
@@ -47,7 +46,7 @@ public class ProfileController extends BaseController {
 	public ResponseEntity<MediatorResponseModel> getBmProfile() {
 		try {
 			List<NeoProfileData> list = bmProfileHandler.getNeoProfile();
-			return prepareSuccessResponse(list, list.size());
+			return prepareSuccessResponse(list, list == null?0:list.size());
 		} catch (Throwable e) {
 			e.printStackTrace();
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());

@@ -1,5 +1,6 @@
 package com.command.mediator.handler;
 
+import java.awt.font.ImageGraphicAttribute;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -39,6 +40,12 @@ public class NeoImageHandler extends BaseHandler {
 		List<NeoImageData> neoImageList = (List<NeoImageData>) neoImageRepository.findAll();
 		LOGGER.info("List of all imagesL: {} ", neoImageList);
 		return neoImageList;// new BmResponse(true, neoImageList.toString());
+	}
+
+	public NeoImageData getImage(String imageId) {
+		NeoImageData data = neoImageRepository.findOne(Integer.valueOf(imageId));
+		LOGGER.info("Found images: {} ", data);
+		return data;
 	}
 
 }

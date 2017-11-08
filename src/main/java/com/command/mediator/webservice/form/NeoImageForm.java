@@ -1,6 +1,5 @@
 package com.command.mediator.webservice.form;
 
-import javax.persistence.Column;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -14,6 +13,9 @@ public class NeoImageForm {
 	
 	@JsonProperty("description")
 	private String description;
+	
+	@JsonProperty("os_type")
+	private String osType;
 	
 	@JsonProperty("mount_path")
 	private String mountPath;
@@ -52,5 +54,18 @@ public class NeoImageForm {
 	public void setIsoPath(String isoPath) {
 		this.isoPath = isoPath;
 	}
-	
+
+	public String getOsType() {
+		return osType;
+	}
+
+	public void setOsType(String osType) {
+		this.osType = osType;
+	}
+
+	@Override
+	public String toString() {
+		return "NeoImageForm [imageName=" + imageName + ", description=" + description + ", osType=" + osType
+				+ ", mountPath=" + mountPath + ", isoPath=" + isoPath + "]";
+	}
 }

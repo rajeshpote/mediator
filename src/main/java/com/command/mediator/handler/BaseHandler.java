@@ -94,6 +94,7 @@ public class BaseHandler {
 		NeoImageData neoImage = new NeoImageData();
 		neoImage.setImageName(neoImageForm.getImageName());
 		neoImage.setDescription(neoImageForm.getDescription());
+		neoImage.setOsType(neoImageForm.getOsType());
 		neoImage.setMountPath("/mnt/neo");
 		neoImage.setIsoPath("/home/neo/iso-images");
 		return neoImage;
