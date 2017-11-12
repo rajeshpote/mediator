@@ -7,7 +7,7 @@ public class NetworkInfoForm {
 	@JsonProperty("device")
 	private String device;
 	
-	@JsonProperty("boot_Prototocol")
+	@JsonProperty("boot_protocol")
 	private String BootProtocol;
 	
 	@JsonProperty("ip")
@@ -19,8 +19,8 @@ public class NetworkInfoForm {
 	@JsonProperty("bridge_name")
 	private String bridgeName;
 	
-	@JsonProperty("connect_kv_to_nic")
-	private String connectKvmToNic;
+	@JsonProperty("nic")
+	private String nic;
 
 	public String getDevice() {
 		return device;
@@ -62,12 +62,11 @@ public class NetworkInfoForm {
 		this.bridgeName = bridgeName;
 	}
 
-	public String getConnectKvmToNic() {
-		return connectKvmToNic;
+	public String getNic() {
+		return nic;
 	}
 
-	public void setConnectKvmToNic(String connectKvmToNic) {
-		this.connectKvmToNic = connectKvmToNic;
+	public void setNic(String nic) {
+		this.nic = nic;
 	}
-	
 }

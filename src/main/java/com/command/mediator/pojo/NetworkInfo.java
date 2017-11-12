@@ -21,8 +21,8 @@ public class NetworkInfo {
 	@JsonProperty("device")
 	private String device;
 	
-	@Column(name = "boot_Prototocol")
-	@JsonProperty("boot_Prototocol")
+	@Column(name = "boot_protocol")
+	@JsonProperty("boot_protocol")
 	private String BootProtocol;
 	
 	@Column(name = "ip")
@@ -37,9 +37,9 @@ public class NetworkInfo {
 	@JsonProperty("bridge_name")
 	private String bridgeName;
 	
-	@Column(name = "connect_kv_to_nic")
-	@JsonProperty("connect_kv_to_nic")
-	private String connectKvmToNic;
+	@Column(name = "nic")
+	@JsonProperty("nic")
+	private String nic;
 
 	public String getDevice() {
 		return device;
@@ -81,12 +81,19 @@ public class NetworkInfo {
 		this.bridgeName = bridgeName;
 	}
 
-	public String getConnectKvmToNic() {
-		return connectKvmToNic;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setConnectKvmToNic(String connectKvmToNic) {
-		this.connectKvmToNic = connectKvmToNic;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	
+
+	public String getNic() {
+		return nic;
+	}
+
+	public void setNic(String nic) {
+		this.nic = nic;
+	}
 }

@@ -3,14 +3,16 @@ package com.command.mediator.handler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.util.StringUtils;
+
+import com.command.mediator.persistent.ProjectRepository;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.pojo.NetworkInfo;
 import com.command.mediator.pojo.PartitioningInfo;
+import com.command.mediator.pojo.ProjectData;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
@@ -18,6 +20,7 @@ import com.command.mediator.webservice.form.CreateBareMetalServerForm;
 import com.command.mediator.webservice.form.NeoImageForm;
 import com.command.mediator.webservice.form.NetworkInfoForm;
 import com.command.mediator.webservice.form.PartitioningInfoForm;
+import com.command.mediator.webservice.form.ProjectForm;
 
 public class BaseHandler {
 
@@ -94,14 +97,15 @@ public class BaseHandler {
 		neoBmProfile.setNeoProfileId(neoProfileId);
 		neoBmProfile.setImageId(profileForm.getImageId());
 		neoBmProfile.setKvm(profileForm.isKvm());
-		String packages = profileForm.getPackages().toString().replaceAll("[\\[\\]]","");
-		neoBmProfile.setPackages(packages);
+		if(!profileForm.getPackages().isEmpty()){
+			String packages = StringUtils.arrayToDelimitedString(profileForm.getPackages().toArray(), ",");
+			neoBmProfile.setPackages(packages);
+		}
 		for (PartitioningInfoForm partitioningInfoForm : profileForm.getPartitioningInfo()) {
 			PartitioningInfo partitioningInfo = createPartitioningInfoObject(partitioningInfoForm);
 			partitioningList.add(partitioningInfo);
 		}
 		neoBmProfile.setPartitioningInfo(partitioningList);
-		
 		for (NetworkInfoForm networkInfoForm : profileForm.getNetworkInfo()) {
 			NetworkInfo networkInfo = createNetworkInfoObject(networkInfoForm);
 			networkInfoList.add(networkInfo);
@@ -113,8 +117,8 @@ public class BaseHandler {
 	public PartitioningInfo createPartitioningInfoObject(PartitioningInfoForm partitioningInfoForm){
 		PartitioningInfo partitioningInfo = new PartitioningInfo();
 		partitioningInfo.setDisk(partitioningInfoForm.getDisk());
-		partitioningInfo.setTypeOfPartition(partitioningInfoForm.getTypeOfPartition());
-		partitioningInfo.setPercentageOfStorage(partitioningInfoForm.getPercentageOfStorage());
+		partitioningInfo.setPartitionType(partitioningInfoForm.getPartitionType());
+		partitioningInfo.setStoragePercentage(partitioningInfoForm.getStoragePercentage());
 		partitioningInfo.setMountPath(partitioningInfoForm.getMountPath());
 		return partitioningInfo;
 	}
@@ -126,7 +130,7 @@ public class BaseHandler {
 		networkInfo.setBootProtocol(networkInfoForm.getBootProtocol());
 		networkInfo.setIp(networkInfoForm.getIp());
 		networkInfo.setNetmask(networkInfoForm.getNetmask());
-		networkInfo.setConnectKvmToNic(networkInfoForm.getConnectKvmToNic());
+		networkInfo.setNic(networkInfoForm.getNic());
 		return networkInfo;
 	}
 	
@@ -153,5 +157,12 @@ public class BaseHandler {
 		return bmServer;
 	}
 	
-
+	public ProjectData createPojectObject(ProjectForm projectForm) {
+		ProjectData projectData = new ProjectData();
+		projectData.setProjectNane(projectForm.getProjectNane());
+		projectData.setDepartment(projectForm.getDepartment());
+		projectData.setProjectDescription(projectForm.getProjectDescription());
+		return projectData;
+	}
+	
 }

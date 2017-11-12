@@ -20,13 +20,13 @@ public class PartitioningInfo {
 	@JsonProperty("disk")
 	private int disk;
 	
-	@Column(name = "type_of_partition")
-	@JsonProperty("type_of_partition")
-	private String typeOfPartition;
+	@Column(name = "partition_type")
+	@JsonProperty("partition_type")
+	private String partitionType;
 	
-	@Column(name = "percentage_of_storage")
-	@JsonProperty("percentage_of_storage")
-	private int percentageOfStorage;
+	@Column(name = "storage_percentage")
+	@JsonProperty("storage_percentage")
+	private int storagePercentage;
 	
 	@Column(name = "mount_path")
 	@JsonProperty("mount_path")
@@ -48,20 +48,20 @@ public class PartitioningInfo {
 		this.disk = disk;
 	}
 
-	public String getTypeOfPartition() {
-		return typeOfPartition;
+	public String getPartitionType() {
+		return partitionType;
 	}
 
-	public void setTypeOfPartition(String typeOfPartition) {
-		this.typeOfPartition = typeOfPartition;
+	public void setPartitionType(String partitionType) {
+		this.partitionType = partitionType;
 	}
 
-	public int getPercentageOfStorage() {
-		return percentageOfStorage;
+	public int getStoragePercentage() {
+		return storagePercentage;
 	}
 
-	public void setPercentageOfStorage(int percentageOfStorage) {
-		this.percentageOfStorage = percentageOfStorage;
+	public void setStoragePercentage(int storagePercentage) {
+		this.storagePercentage = storagePercentage;
 	}
 
 	public String getMountPath() {

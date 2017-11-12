@@ -1,6 +1,7 @@
 package com.command.mediator.webservice.form;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import org.hibernate.validator.constraints.NotBlank;
@@ -26,7 +27,7 @@ public class BmProfileForm {
 	private boolean kvm;
 	
 	@JsonProperty("packages")
-	private List<String> packages;
+	private List<String> packages = new ArrayList<String>();
 	
 	@JsonProperty("partitioning_info")
 	private List<PartitioningInfoForm> partitioningInfo;

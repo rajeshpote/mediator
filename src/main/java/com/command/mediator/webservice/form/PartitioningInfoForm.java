@@ -7,11 +7,11 @@ public class PartitioningInfoForm {
 	@JsonProperty("disk")
 	private int disk;
 	
-	@JsonProperty("type_of_partition")
-	private String typeOfPartition;
+	@JsonProperty("partition_type")
+	private String partitionType;
 	
-	@JsonProperty("percentage_of_storage")
-	private int percentageOfStorage;
+	@JsonProperty("storage_percentage")
+	private int storagePercentage;
 	
 	@JsonProperty("mount_path")
 	private String mountPath;
@@ -24,22 +24,22 @@ public class PartitioningInfoForm {
 		this.disk = disk;
 	}
 	
-	public String getTypeOfPartition() {
-		return typeOfPartition;
-	}
-	
-	public void setTypeOfPartition(String typeOfPartition) {
-		this.typeOfPartition = typeOfPartition;
+	public String getPartitionType() {
+		return partitionType;
 	}
 
-	public int getPercentageOfStorage() {
-		return percentageOfStorage;
+	public void setPartitionType(String partitionType) {
+		this.partitionType = partitionType;
 	}
-	
-	public void setPercentageOfStorage(int percentageOfStorage) {
-		this.percentageOfStorage = percentageOfStorage;
+
+	public int getStoragePercentage() {
+		return storagePercentage;
 	}
-	
+
+	public void setStoragePercentage(int storagePercentage) {
+		this.storagePercentage = storagePercentage;
+	}
+
 	public String getMountPath() {
 		return mountPath;
 	}
