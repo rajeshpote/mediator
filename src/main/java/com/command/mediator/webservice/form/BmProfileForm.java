@@ -1,10 +1,9 @@
 package com.command.mediator.webservice.form;
 
 
+import java.util.List;
 import javax.persistence.Column;
-
 import org.hibernate.validator.constraints.NotBlank;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BmProfileForm {
@@ -23,11 +22,17 @@ public class BmProfileForm {
 	@JsonProperty("kickstart_file")
 	private String kickstartFile;
 	
-	@Column(name = "kvm")
-	private String kvm;
+	@JsonProperty("kvm")
+	private boolean kvm;
 	
-	@Column(name = "packages")
-	private String packages;
+	@JsonProperty("packages")
+	private List<String> packages;
+	
+	@JsonProperty("partitioning_info")
+	private List<PartitioningInfoForm> partitioningInfo;
+	
+	@JsonProperty("network_info")
+	private List<NetworkInfoForm> networkInfo;
 	
 	@JsonProperty("created_by")
 	private String createdBy;
@@ -35,20 +40,28 @@ public class BmProfileForm {
 	@JsonProperty("created_on")
 	private String createdOn;
 	
-	public String getKvm() {
+	public boolean isKvm() {
 		return kvm;
 	}
 
-	public void setKvm(String kvm) {
+	public void setKvm(boolean kvm) {
 		this.kvm = kvm;
 	}
-
-	public String getPackages() {
-		return packages;
+	
+	public List<PartitioningInfoForm> getPartitioningInfo() {
+		return partitioningInfo;
 	}
 
-	public void setPackages(String packages) {
-		this.packages = packages;
+	public void setPartitioningInfo(List<PartitioningInfoForm> partitioningInfo) {
+		this.partitioningInfo = partitioningInfo;
+	}
+
+	public List<NetworkInfoForm> getNetworkInfo() {
+		return networkInfo;
+	}
+
+	public void setNetworkInfo(List<NetworkInfoForm> networkInfo) {
+		this.networkInfo = networkInfo;
 	}
 
 	public String getName() {
@@ -61,6 +74,14 @@ public class BmProfileForm {
 
 	public String getDescription() {
 		return description;
+	}
+	
+	public List<String> getPackages() {
+		return packages;
+	}
+
+	public void setPackages(List<String> packages) {
+		this.packages = packages;
 	}
 
 	public void setDescription(String description) {

@@ -1,17 +1,23 @@
 package com.command.mediator.handler;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.util.StringUtils;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
+import com.command.mediator.pojo.NetworkInfo;
+import com.command.mediator.pojo.PartitioningInfo;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
 import com.command.mediator.webservice.form.CreateBareMetalServerForm;
 import com.command.mediator.webservice.form.NeoImageForm;
+import com.command.mediator.webservice.form.NetworkInfoForm;
+import com.command.mediator.webservice.form.PartitioningInfoForm;
 
 public class BaseHandler {
 
@@ -83,11 +89,45 @@ public class BaseHandler {
 	
 	public NeoBmProfileData createBmNeoProfileObject(BmProfileForm profileForm, Integer neoProfileId){
 		NeoBmProfileData neoBmProfile = new NeoBmProfileData();
+		List<PartitioningInfo> partitioningList = new ArrayList<PartitioningInfo>();
+		List<NetworkInfo> networkInfoList = new ArrayList<NetworkInfo>();
 		neoBmProfile.setNeoProfileId(neoProfileId);
 		neoBmProfile.setImageId(profileForm.getImageId());
-		neoBmProfile.setKvm(profileForm.getKvm());
-		neoBmProfile.setPackages(profileForm.getPackages());
+		neoBmProfile.setKvm(profileForm.isKvm());
+		String packages = profileForm.getPackages().toString().replaceAll("[\\[\\]]","");
+		neoBmProfile.setPackages(packages);
+		for (PartitioningInfoForm partitioningInfoForm : profileForm.getPartitioningInfo()) {
+			PartitioningInfo partitioningInfo = createPartitioningInfoObject(partitioningInfoForm);
+			partitioningList.add(partitioningInfo);
+		}
+		neoBmProfile.setPartitioningInfo(partitioningList);
+		
+		for (NetworkInfoForm networkInfoForm : profileForm.getNetworkInfo()) {
+			NetworkInfo networkInfo = createNetworkInfoObject(networkInfoForm);
+			networkInfoList.add(networkInfo);
+		}
+		neoBmProfile.setNetworkInfo(networkInfoList);
 		return neoBmProfile;
+	}
+	
+	public PartitioningInfo createPartitioningInfoObject(PartitioningInfoForm partitioningInfoForm){
+		PartitioningInfo partitioningInfo = new PartitioningInfo();
+		partitioningInfo.setDisk(partitioningInfoForm.getDisk());
+		partitioningInfo.setTypeOfPartition(partitioningInfoForm.getTypeOfPartition());
+		partitioningInfo.setPercentageOfStorage(partitioningInfoForm.getPercentageOfStorage());
+		partitioningInfo.setMountPath(partitioningInfoForm.getMountPath());
+		return partitioningInfo;
+	}
+	
+	public NetworkInfo createNetworkInfoObject(NetworkInfoForm networkInfoForm){
+		NetworkInfo networkInfo = new NetworkInfo();
+		networkInfo.setDevice(networkInfoForm.getDevice());
+		networkInfo.setBridgeName(networkInfoForm.getBridgeName());
+		networkInfo.setBootProtocol(networkInfoForm.getBootProtocol());
+		networkInfo.setIp(networkInfoForm.getIp());
+		networkInfo.setNetmask(networkInfoForm.getNetmask());
+		networkInfo.setConnectKvmToNic(networkInfoForm.getConnectKvmToNic());
+		return networkInfo;
 	}
 	
 	public NeoImageData createImageObject(NeoImageForm neoImageForm){

@@ -16,6 +16,7 @@ import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.webservice.controller.CobblerController;
 import com.command.mediator.webservice.form.BmProfileForm;
+import com.command.mediator.webservice.form.PartitioningInfoForm;
 
 @Service
 public class BMProfileHandler extends BaseHandler {

@@ -1,11 +1,16 @@
 package com.command.mediator.pojo;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -32,8 +37,17 @@ public class NeoBmProfileData {
 	
 	@Column(name = "kvm")
 	@JsonProperty("kvm")
-	private String kvm;
+	private boolean kvm;
 	
+	@Column(name = "partitioning_info")
+	@JsonProperty("partitioning_info")
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<PartitioningInfo> partitioningInfo = new ArrayList<PartitioningInfo>();
+	
+	@Column(name = "network_Info")
+	@JsonProperty("network_Info")
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<NetworkInfo> networkInfo = new ArrayList<NetworkInfo>();
 	
 	public Integer getId() {
 		return id;
@@ -51,8 +65,6 @@ public class NeoBmProfileData {
 		this.imageId = imageId;
 	}
 	
-	
-
 	public Integer getNeoProfileId() {
 		return neoProfileId;
 	}
@@ -69,14 +81,29 @@ public class NeoBmProfileData {
 		this.packages = packages;
 	}
 
-	public String getKvm() {
+	public boolean isKvm() {
 		return kvm;
 	}
 
-	public void setKvm(String kvm) {
+	public void setKvm(boolean kvm) {
 		this.kvm = kvm;
 	}
+	
+	public List<PartitioningInfo> getPartitioningInfo() {
+		return partitioningInfo;
+	}
 
+	public void setPartitioningInfo(List<PartitioningInfo> partitioningInfo) {
+		this.partitioningInfo = partitioningInfo;
+	}
+
+	public List<NetworkInfo> getNetworkInfo() {
+		return networkInfo;
+	}
+
+	public void setNetworkInfo(List<NetworkInfo> networkInfo) {
+		this.networkInfo = networkInfo;
+	}
 	@Override
 	public String toString() {
 		return "NeoBmProfileData [id=" + id + ", neoProfileId=" + neoProfileId + ", imageId=" + imageId + ", packages="
