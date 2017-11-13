@@ -43,6 +43,10 @@ public class BmServerData {
 	@JsonProperty("pm_password")
 	private String pmPassword;
 	
+	@Column(name = "project_id")
+	@JsonProperty("project_id")
+	private Integer projectId;
+	
 	@Column(name = "status")
 	@JsonProperty("status")
 	private String status;
@@ -59,6 +63,14 @@ public class BmServerData {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
 	}
 
 	public String getName() {

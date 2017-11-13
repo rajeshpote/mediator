@@ -37,7 +37,7 @@ public class NeoBmProfileData {
 	
 	@Column(name = "kvm")
 	@JsonProperty("kvm")
-	private boolean kvm;
+	private Boolean kvm;
 	
 	@Column(name = "partitioning_info")
 	@JsonProperty("partitioning_info")
@@ -81,14 +81,14 @@ public class NeoBmProfileData {
 		this.packages = packages;
 	}
 
-	public boolean isKvm() {
+	public Boolean getKvm() {
 		return kvm;
 	}
 
-	public void setKvm(boolean kvm) {
+	public void setKvm(Boolean kvm) {
 		this.kvm = kvm;
 	}
-	
+
 	public List<PartitioningInfo> getPartitioningInfo() {
 		return partitioningInfo;
 	}

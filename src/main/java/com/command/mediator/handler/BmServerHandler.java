@@ -92,4 +92,9 @@ public class BmServerHandler extends BaseHandler {
 		return bmServerDataList;
 	}
 
+	public void deleteBmServer(int id) {
+		bmServerRepository.delete(id);
+		LOGGER.info("Deleted bm server for id : {} ");
+	}
+
 }

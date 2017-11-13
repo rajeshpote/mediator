@@ -24,7 +24,7 @@ public class BmProfileForm {
 	private String kickstartFile;
 	
 	@JsonProperty("kvm")
-	private boolean kvm;
+	private Boolean kvm;
 	
 	@JsonProperty("packages")
 	private List<String> packages = new ArrayList<String>();
@@ -41,14 +41,14 @@ public class BmProfileForm {
 	@JsonProperty("created_on")
 	private String createdOn;
 	
-	public boolean isKvm() {
+	public Boolean getKvm() {
 		return kvm;
 	}
 
-	public void setKvm(boolean kvm) {
+	public void setKvm(Boolean kvm) {
 		this.kvm = kvm;
 	}
-	
+
 	public List<PartitioningInfoForm> getPartitioningInfo() {
 		return partitioningInfo;
 	}

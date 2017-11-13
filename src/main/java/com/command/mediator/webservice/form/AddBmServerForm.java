@@ -22,6 +22,15 @@ public class AddBmServerForm {
 	@JsonProperty("pm_password")
 	private String pmPassword;
 	
+	@JsonProperty("project_id")
+	private Integer projectId;
+	
+	public Integer getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
 	public String getName() {
 		return name;
 	}

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.util.StringUtils;
-
-import com.command.mediator.persistent.ProjectRepository;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
@@ -96,7 +94,7 @@ public class BaseHandler {
 		List<NetworkInfo> networkInfoList = new ArrayList<NetworkInfo>();
 		neoBmProfile.setNeoProfileId(neoProfileId);
 		neoBmProfile.setImageId(profileForm.getImageId());
-		neoBmProfile.setKvm(profileForm.isKvm());
+		neoBmProfile.setKvm(profileForm.getKvm());
 		if(!profileForm.getPackages().isEmpty()){
 			String packages = StringUtils.arrayToDelimitedString(profileForm.getPackages().toArray(), ",");
 			neoBmProfile.setPackages(packages);
@@ -152,6 +150,7 @@ public class BaseHandler {
 		bmServer.setPmAddress(addBmServerForm.getPmAddress());
 		bmServer.setPmType(addBmServerForm.getPmType());
 		bmServer.setPmPassword(addBmServerForm.getPmPassword());
+		bmServer.setProjectId(addBmServerForm.getProjectId());
 		bmServer.setCreatedDate(new Date());
 		bmServer.setStatus("unallocated");
 		return bmServer;
