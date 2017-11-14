@@ -3,6 +3,7 @@ package com.command.mediator.handler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 
@@ -75,7 +76,7 @@ public class BmServerHandler extends BaseHandler {
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
 			if ("unallocated".equalsIgnoreCase(bmServer.getStatus())) {
 				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoImageData.getImageName()+"-x86_64" + " " + bmServer.getPmType() + 
-						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmAddress() + " " + "enp1s0f1" + " " 
+						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
 						+ bmServer.getInterfaceMac() + " " + neoProfileData.getKickstartFile());
 				if (output != null && output.contains("exception on server")) {
 					bmServer.setStatus("Failed to allocate:"+output);
@@ -92,9 +93,17 @@ public class BmServerHandler extends BaseHandler {
 		return bmServerDataList;
 	}
 
+	public BmServerData updateBmServer(int id, AddBmServerForm addBmServerForm) {
+		BmServerData bmServer = bmServerRepository.findOne(id);
+		BmServerData bmServerData = new BmServerData();
+		bmServerData = updateBmServer(bmServer, addBmServerForm);
+		bmServerData = bmServerRepository.save(bmServerData);
+	
+		return bmServerData;
+	}
+
 	public void deleteBmServer(int id) {
 		bmServerRepository.delete(id);
 		LOGGER.info("Deleted bm server for id : {} ");
 	}
-
 }

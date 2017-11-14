@@ -3,6 +3,8 @@ package com.command.mediator.handler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import org.springframework.util.StringUtils;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
@@ -11,6 +13,8 @@ import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.pojo.NetworkInfo;
 import com.command.mediator.pojo.PartitioningInfo;
 import com.command.mediator.pojo.ProjectData;
+import com.command.mediator.pojo.StorageInfo;
+import com.command.mediator.pojo.VmProfileData;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
@@ -19,6 +23,8 @@ import com.command.mediator.webservice.form.NeoImageForm;
 import com.command.mediator.webservice.form.NetworkInfoForm;
 import com.command.mediator.webservice.form.PartitioningInfoForm;
 import com.command.mediator.webservice.form.ProjectForm;
+import com.command.mediator.webservice.form.StorageInfoForm;
+import com.command.mediator.webservice.form.VmProfileForm;
 
 public class BaseHandler {
 
@@ -164,4 +170,66 @@ public class BaseHandler {
 		return projectData;
 	}
 	
+	public BmServerData updateBmServer(BmServerData bmServer, AddBmServerForm addBmServerForm){
+		try{
+			if(Objects.isNull(bmServer)) throw new Exception("BM Sever not present with the given id.");
+			if(!StringUtils.isEmpty(addBmServerForm.getName())){
+				bmServer.setName(addBmServerForm.getName());
+			}
+			if(!StringUtils.isEmpty(addBmServerForm.getInterfaceMac())){
+				bmServer.setInterfaceMac(addBmServerForm.getInterfaceMac());
+			}
+			if(!StringUtils.isEmpty(addBmServerForm.getPmAddress())){
+				bmServer.setPmAddress(addBmServerForm.getPmAddress());
+			}
+			if(!StringUtils.isEmpty(addBmServerForm.getPmName())){
+				bmServer.setPmName(addBmServerForm.getPmName());
+			}
+			if(!StringUtils.isEmpty(addBmServerForm.getPmPassword())){
+				bmServer.setPmPassword(addBmServerForm.getPmPassword());
+			}
+			if(!StringUtils.isEmpty(addBmServerForm.getPmType())){
+				bmServer.setPmType(addBmServerForm.getPmType());
+			}
+			if(addBmServerForm.getProjectId().MAX_VALUE > 0){
+				bmServer.setProjectId(addBmServerForm.getProjectId());
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return bmServer;
+	}
+	
+	public VmProfileData createVmProfile(VmProfileForm vmProfileForm) {
+		VmProfileData vmProfile = new VmProfileData();
+		List<StorageInfo> storageInfoList = new ArrayList<StorageInfo>();
+		List<NetworkInfo> networkInfoList = new ArrayList<NetworkInfo>();
+		vmProfile.setImage(vmProfileForm.getImage());
+		vmProfile.setCpu(vmProfileForm.getCpu());
+		vmProfile.setProfileDescription(vmProfileForm.getProfileDescription());
+		vmProfile.setProfileName(vmProfileForm.getProfileName());
+		vmProfile.setRamMemory(vmProfileForm.getRamMemory());
+
+		for (StorageInfoForm storageInfoForm : vmProfileForm.getStorageInfo()) {
+			StorageInfo storageInfo = createStorageInfoObject(storageInfoForm);
+			storageInfoList.add(storageInfo);
+		}
+		vmProfile.setStorageInfo(storageInfoList);
+		
+		for (NetworkInfoForm networkInfoForm : vmProfileForm.getNetworkInfo()) {
+			NetworkInfo networkInfo = createNetworkInfoObject(networkInfoForm);
+			networkInfoList.add(networkInfo);
+		}
+		vmProfile.setNetworkInfo(networkInfoList);
+		return vmProfile;
+	}
+
+	public StorageInfo createStorageInfoObject(StorageInfoForm storageInfoForm){
+		StorageInfo storageInfo = new StorageInfo();
+		storageInfo.setDisk(storageInfoForm.getDisk());
+		storageInfo.setSpacePercentage(storageInfoForm.getSpacePercentage());
+		storageInfo.setMountPath(storageInfoForm.getMountPath());
+		return storageInfo;
+	}
+
 }

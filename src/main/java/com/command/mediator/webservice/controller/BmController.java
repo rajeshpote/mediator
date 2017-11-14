@@ -69,13 +69,13 @@ public class BmController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<MediatorResponseModel> updateStory(@PathVariable("id") String id, @Valid @RequestBody AddBmServerForm addBmServerForm,
+    public ResponseEntity<MediatorResponseModel> updateBmServer(@PathVariable("id") int id, @Valid @RequestBody AddBmServerForm addBmServerForm,
            BindingResult validationResults) {
 		try {
 			if (validationResults.hasErrors()) {
 				return prepareValidationErrorResponse(validationResults, 0);
 			}
-			BmServerData response = bmServerHandler.addBmServer(addBmServerForm);
+			BmServerData response = bmServerHandler.updateBmServer(id, addBmServerForm);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();

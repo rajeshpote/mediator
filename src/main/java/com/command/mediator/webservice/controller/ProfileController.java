@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.BMProfileHandler;
+import com.command.mediator.handler.VMProfileHandler;
 import com.command.mediator.model.MediatorResponseModel;
 import com.command.mediator.model.MetadataModel;
 import com.command.mediator.pojo.NeoProfileData;
+import com.command.mediator.pojo.VmProfileData;
 import com.command.mediator.webservice.form.BmProfileForm;
+import com.command.mediator.webservice.form.VmProfileForm;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -26,6 +29,9 @@ public class ProfileController extends BaseController {
 	@Resource
 	private BMProfileHandler bmProfileHandler;
 
+	@Resource
+	private VMProfileHandler vmProfileHandler;
+	
 	@RequestMapping(value = "/bm", method = RequestMethod.POST)
 	public ResponseEntity<MediatorResponseModel> saveBmProfile(@Valid @RequestBody BmProfileForm profileForm,
 			BindingResult validationResults) {
@@ -53,7 +59,7 @@ public class ProfileController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<MediatorResponseModel> updateStory(@PathVariable("id") String id, @Valid @RequestBody BmProfileForm profileForm,
+    public ResponseEntity<MediatorResponseModel> updateBmProfile(@PathVariable("id") String id, @Valid @RequestBody BmProfileForm profileForm,
            BindingResult validationResults) {
 		try {
 			if (validationResults.hasErrors()) {
@@ -68,10 +74,25 @@ public class ProfileController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<MediatorResponseModel> deleteBmServer(@PathVariable("id") int id) {
+	public ResponseEntity<MediatorResponseModel> deleteBmProfile(@PathVariable("id") int id) {
 		try {
 			bmProfileHandler.deleteBmProfile(id);
 			return prepareSuccessResponse("success", 1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/vm", method = RequestMethod.POST)
+	public ResponseEntity<MediatorResponseModel> saveVmProfile(@Valid @RequestBody VmProfileForm vmProfileForm,
+			BindingResult validationResults) {
+		try {
+			if (validationResults.hasErrors()) {
+				return prepareValidationErrorResponse(validationResults, 0);
+			}
+			VmProfileData response = vmProfileHandler.saveVmProfile(vmProfileForm);
+			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
