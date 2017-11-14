@@ -39,13 +39,15 @@ public class NeoBmProfileData {
 	@JsonProperty("kvm")
 	private Boolean kvm;
 	
-	@Column(name = "auto_partitioning")
-	@JsonProperty("auto_partitioning")
-	private Boolean autoPartitioning = Boolean.TRUE;
+	//net_type: dhcp or static
+	@JsonProperty("network_type")
+	@Column(name = "network_type")
+	private String netType;
 	
-	@Column(name = "dhcp")
-	@JsonProperty("dhcp")
-	private Boolean dhcp = Boolean.TRUE;
+	//disk_part_type: auto or manual
+	@Column(name = "disk_part_type")
+	@JsonProperty("disk_part_type")
+	private String diskPartType;
 	
 	@Column(name = "partitioning_info")
 	@JsonProperty("partitioning_info")
@@ -93,20 +95,20 @@ public class NeoBmProfileData {
 		return kvm;
 	}
 
-	public Boolean getAutoPartitioning() {
-		return autoPartitioning;
+	public String getNetType() {
+		return netType;
 	}
 
-	public void setAutoPartitioning(Boolean autoPartitioning) {
-		this.autoPartitioning = autoPartitioning;
+	public void setNetType(String netType) {
+		this.netType = netType;
 	}
 
-	public Boolean getDhcp() {
-		return dhcp;
+	public String getDiskPartType() {
+		return diskPartType;
 	}
 
-	public void setDhcp(Boolean dhcp) {
-		this.dhcp = dhcp;
+	public void setDiskPartType(String diskPartType) {
+		this.diskPartType = diskPartType;
 	}
 
 	public void setKvm(Boolean kvm) {
@@ -132,7 +134,7 @@ public class NeoBmProfileData {
 	@Override
 	public String toString() {
 		return "NeoBmProfileData [id=" + id + ", neoProfileId=" + neoProfileId + ", imageId=" + imageId + ", packages="
-				+ packages + ", kvm=" + kvm + ", autoPartitioning=" + autoPartitioning + ", dhcp=" + dhcp
+				+ packages + ", kvm=" + kvm + ", netType=" + netType + ", diskPartType=" + diskPartType
 				+ ", partitioningInfo=" + partitioningInfo + ", networkInfo=" + networkInfo + "]";
 	}
 }

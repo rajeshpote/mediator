@@ -101,8 +101,8 @@ public class BaseHandler {
 		neoBmProfile.setNeoProfileId(neoProfileId);
 		neoBmProfile.setImageId(profileForm.getImageId());
 		neoBmProfile.setKvm(profileForm.getKvm());
-		neoBmProfile.setAutoPartitioning(profileForm.getAutoPartitioning());
-		neoBmProfile.setDhcp(profileForm.getDhcp());
+		neoBmProfile.setDiskPartType(profileForm.getDiskPartType());
+		neoBmProfile.setNetType(profileForm.getNetType());
 		if(!profileForm.getPackages().isEmpty()){
 			String packages = StringUtils.arrayToDelimitedString(profileForm.getPackages().toArray(), ",");
 			neoBmProfile.setPackages(packages);

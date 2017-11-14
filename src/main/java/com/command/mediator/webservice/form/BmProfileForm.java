@@ -3,7 +3,6 @@ package com.command.mediator.webservice.form;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
 import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,11 +25,13 @@ public class BmProfileForm {
 	@JsonProperty("kvm")
 	private Boolean kvm;
 	
-	@JsonProperty("auto_partitioning")
-	private Boolean autoPartitioning = Boolean.TRUE;
+	//net_type: dhcp or static
+	@JsonProperty("network_type")
+	private String netType;
 	
-	@JsonProperty("dhcp")
-	private Boolean dhcp = Boolean.TRUE;
+	//disk_part_type: auto or manual
+	@JsonProperty("disk_part_type")
+	private String diskPartType;
 	
 	@JsonProperty("packages")
 	private List<String> packages = new ArrayList<String>();
@@ -55,20 +56,20 @@ public class BmProfileForm {
 		this.kvm = kvm;
 	}
 	
-	public Boolean getAutoPartitioning() {
-		return autoPartitioning;
+	public String getNetType() {
+		return netType;
 	}
 
-	public void setAutoPartitioning(Boolean autoPartitioning) {
-		this.autoPartitioning = autoPartitioning;
+	public void setNetType(String netType) {
+		this.netType = netType;
 	}
 
-	public Boolean getDhcp() {
-		return dhcp;
+	public String getDiskPartType() {
+		return diskPartType;
 	}
 
-	public void setDhcp(Boolean dhcp) {
-		this.dhcp = dhcp;
+	public void setDiskPartType(String diskPartType) {
+		this.diskPartType = diskPartType;
 	}
 
 	public List<PartitioningInfoForm> getPartitioningInfo() {

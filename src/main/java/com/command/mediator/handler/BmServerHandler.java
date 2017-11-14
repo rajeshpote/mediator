@@ -77,7 +77,7 @@ public class BmServerHandler extends BaseHandler {
 			if ("unallocated".equalsIgnoreCase(bmServer.getStatus())) {
 				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoImageData.getId()+"-x86_64" + " " + bmServer.getPmType() + 
 						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
-						+ bmServer.getInterfaceMac());
+						+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm());
 				if (output != null && output.contains("exception on server")) {
 					bmServer.setStatus("Failed to allocate:"+output);
 				} else {
