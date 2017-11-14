@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.BmServerHandler;
 import com.command.mediator.model.MediatorResponseModel;
@@ -89,6 +90,18 @@ public class BmController extends BaseController{
 			bmServerHandler.deleteBmServer(id);
 			return prepareSuccessResponse("success", 1);
 		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/stop", method = RequestMethod.GET)
+	public ResponseEntity<MediatorResponseModel> stopBmServer(@RequestParam(name = "server-name") String serverName) {
+		try {
+			String response = bmServerHandler.stopBmServer(serverName);
+			return prepareSuccessResponse(response, 1);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}

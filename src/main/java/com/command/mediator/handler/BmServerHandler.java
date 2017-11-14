@@ -20,6 +20,7 @@ import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
+import com.command.mediator.util.StringUtils;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.ProvisionBMServerForm;
 
@@ -29,6 +30,8 @@ public class BmServerHandler extends BaseHandler {
 	private static Logger LOGGER = LoggerFactory.getLogger(BmServerHandler.class);
 
 	private String PROV_COMMAND = "./scripts/provBmServer.sh";
+	
+	private String STOP_SERVER_COMMAND = "./scripts/stopProvBmServer.sh";
 
 	@Resource
 	private BmServerRepository bmServerRepository;
@@ -106,5 +109,15 @@ public class BmServerHandler extends BaseHandler {
 	public void deleteBmServer(int id) {
 		bmServerRepository.delete(id);
 		LOGGER.info("Deleted bm server for id : {} ");
+	}
+	
+	public String stopBmServer(String serverName) throws Exception{
+		String output = null;
+		if(StringUtils.isEmpty(serverName)){
+			throw new Exception("Server name must be specified.");
+		}
+		output = CommandExecutor.execute(STOP_SERVER_COMMAND + " " + serverName);
+		if (output != null && output.contains("exception on server"));
+		return output;
 	}
 }
