@@ -32,9 +32,9 @@ public class NeoProfileData {
 	@JsonProperty("image_id")
 	private String imageId;
 	
-	@Column(name = "kickstart_file")
+	/*@Column(name = "kickstart_file")
 	@JsonProperty("kickstart_file")
-	private String kickstartFile;
+	private String kickstartFile;*/
 	
 	@Column(name = "created_by")
 	@JsonProperty("created_by")
@@ -77,13 +77,13 @@ public class NeoProfileData {
 		this.imageId = imageId;
 	}
 
-	public String getKickstartFile() {
+	/*public String getKickstartFile() {
 		return kickstartFile;
 	}
 
 	public void setKickstartFile(String kickstartFile) {
 		this.kickstartFile = kickstartFile;
-	}
+	}*/
 
 	public String getCreatedBy() {
 		return createdBy;
@@ -104,7 +104,7 @@ public class NeoProfileData {
 	@Override
 	public String toString() {
 		return "NeoProfileData [id=" + id + ", name=" + name + ", description=" + description + ", imageId=" + imageId
-				+ ", kickstartFile=" + kickstartFile + ", createdBy=" + createdBy + ", createdOn=" + createdOn + "]";
+				 + ", createdBy=" + createdBy + ", createdOn=" + createdOn + "]";
 	}
 
 }

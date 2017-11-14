@@ -75,9 +75,9 @@ public class BmServerHandler extends BaseHandler {
 			BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(serverId));
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
 			if ("unallocated".equalsIgnoreCase(bmServer.getStatus())) {
-				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoImageData.getImageName()+"-x86_64" + " " + bmServer.getPmType() + 
+				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoImageData.getId()+"-x86_64" + " " + bmServer.getPmType() + 
 						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
-						+ bmServer.getInterfaceMac() + " " + neoProfileData.getKickstartFile());
+						+ bmServer.getInterfaceMac());
 				if (output != null && output.contains("exception on server")) {
 					bmServer.setStatus("Failed to allocate:"+output);
 				} else {
@@ -93,13 +93,14 @@ public class BmServerHandler extends BaseHandler {
 		return bmServerDataList;
 	}
 
-	public BmServerData updateBmServer(int id, AddBmServerForm addBmServerForm) {
-		BmServerData bmServer = bmServerRepository.findOne(id);
-		BmServerData bmServerData = new BmServerData();
-		bmServerData = updateBmServer(bmServer, addBmServerForm);
-		bmServerData = bmServerRepository.save(bmServerData);
-	
-		return bmServerData;
+	public BmServerData updateBmServer(String id, AddBmServerForm addBmServerForm) throws Exception {
+		BmServerData bmServer = bmServerRepository.findOne(Integer.valueOf(id));
+		if(Objects.isNull(bmServer)){
+			throw new Exception("BM Sever not present with the given id.");
+		}
+		bmServer = updateBmServer(bmServer, addBmServerForm);
+		bmServer = bmServerRepository.save(bmServer);
+		return bmServer;
 	}
 
 	public void deleteBmServer(int id) {

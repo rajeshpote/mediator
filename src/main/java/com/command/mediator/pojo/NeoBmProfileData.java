@@ -39,6 +39,14 @@ public class NeoBmProfileData {
 	@JsonProperty("kvm")
 	private Boolean kvm;
 	
+	@Column(name = "auto_partitioning")
+	@JsonProperty("auto_partitioning")
+	private Boolean autoPartitioning = Boolean.TRUE;
+	
+	@Column(name = "dhcp")
+	@JsonProperty("dhcp")
+	private Boolean dhcp = Boolean.TRUE;
+	
 	@Column(name = "partitioning_info")
 	@JsonProperty("partitioning_info")
 	@OneToMany(cascade=CascadeType.ALL)
@@ -85,6 +93,22 @@ public class NeoBmProfileData {
 		return kvm;
 	}
 
+	public Boolean getAutoPartitioning() {
+		return autoPartitioning;
+	}
+
+	public void setAutoPartitioning(Boolean autoPartitioning) {
+		this.autoPartitioning = autoPartitioning;
+	}
+
+	public Boolean getDhcp() {
+		return dhcp;
+	}
+
+	public void setDhcp(Boolean dhcp) {
+		this.dhcp = dhcp;
+	}
+
 	public void setKvm(Boolean kvm) {
 		this.kvm = kvm;
 	}
@@ -104,10 +128,11 @@ public class NeoBmProfileData {
 	public void setNetworkInfo(List<NetworkInfo> networkInfo) {
 		this.networkInfo = networkInfo;
 	}
+
 	@Override
 	public String toString() {
 		return "NeoBmProfileData [id=" + id + ", neoProfileId=" + neoProfileId + ", imageId=" + imageId + ", packages="
-				+ packages + "]";
+				+ packages + ", kvm=" + kvm + ", autoPartitioning=" + autoPartitioning + ", dhcp=" + dhcp
+				+ ", partitioningInfo=" + partitioningInfo + ", networkInfo=" + networkInfo + "]";
 	}
-
 }

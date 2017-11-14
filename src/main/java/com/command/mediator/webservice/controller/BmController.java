@@ -69,7 +69,7 @@ public class BmController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<MediatorResponseModel> updateBmServer(@PathVariable("id") int id, @Valid @RequestBody AddBmServerForm addBmServerForm,
+    public ResponseEntity<MediatorResponseModel> updateBmServer(@PathVariable("id") String id, @Valid @RequestBody AddBmServerForm addBmServerForm,
            BindingResult validationResults) {
 		try {
 			if (validationResults.hasErrors()) {

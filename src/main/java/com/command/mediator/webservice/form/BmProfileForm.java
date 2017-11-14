@@ -20,11 +20,17 @@ public class BmProfileForm {
 	@JsonProperty("image_id")
 	private String imageId;
 	
-	@JsonProperty("kickstart_file")
-	private String kickstartFile;
+	/*@JsonProperty("kickstart_file")
+	private String kickstartFile;*/
 	
 	@JsonProperty("kvm")
 	private Boolean kvm;
+	
+	@JsonProperty("auto_partitioning")
+	private Boolean autoPartitioning = Boolean.TRUE;
+	
+	@JsonProperty("dhcp")
+	private Boolean dhcp = Boolean.TRUE;
 	
 	@JsonProperty("packages")
 	private List<String> packages = new ArrayList<String>();
@@ -47,6 +53,22 @@ public class BmProfileForm {
 
 	public void setKvm(Boolean kvm) {
 		this.kvm = kvm;
+	}
+	
+	public Boolean getAutoPartitioning() {
+		return autoPartitioning;
+	}
+
+	public void setAutoPartitioning(Boolean autoPartitioning) {
+		this.autoPartitioning = autoPartitioning;
+	}
+
+	public Boolean getDhcp() {
+		return dhcp;
+	}
+
+	public void setDhcp(Boolean dhcp) {
+		this.dhcp = dhcp;
 	}
 
 	public List<PartitioningInfoForm> getPartitioningInfo() {
@@ -97,13 +119,13 @@ public class BmProfileForm {
 		this.imageId = imageId;
 	}
 
-	public String getKickstartFile() {
+/*	public String getKickstartFile() {
 		return kickstartFile;
 	}
 
 	public void setKickstartFile(String kickstartFile) {
 		this.kickstartFile = kickstartFile;
-	}
+	}*/
 
 	public String getCreatedBy() {
 		return createdBy;
@@ -124,7 +146,7 @@ public class BmProfileForm {
 	@Override
 	public String toString() {
 		return "ProfileForm [name=" + name + ", description=" + description + ", imageId=" + imageId
-				+ ", kickstartFile=" + kickstartFile + ", createdBy=" + createdBy + ", createdOn=" + createdOn + "]";
+				 + ", createdBy=" + createdBy + ", createdOn=" + createdOn + "]";
 	}
 
 	

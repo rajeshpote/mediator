@@ -88,7 +88,7 @@ public class BaseHandler {
 		bmProfile.setName(profileForm.getName());
 		bmProfile.setDescription(profileForm.getDescription());
 		bmProfile.setImageId(profileForm.getImageId());
-		bmProfile.setKickstartFile(profileForm.getKickstartFile());
+		//bmProfile.setKickstartFile(profileForm.getKickstartFile());
 		bmProfile.setCreatedBy(profileForm.getCreatedBy());
 		bmProfile.setCreatedOn(new Date());
 		return bmProfile;
@@ -101,6 +101,8 @@ public class BaseHandler {
 		neoBmProfile.setNeoProfileId(neoProfileId);
 		neoBmProfile.setImageId(profileForm.getImageId());
 		neoBmProfile.setKvm(profileForm.getKvm());
+		neoBmProfile.setAutoPartitioning(profileForm.getAutoPartitioning());
+		neoBmProfile.setDhcp(profileForm.getDhcp());
 		if(!profileForm.getPackages().isEmpty()){
 			String packages = StringUtils.arrayToDelimitedString(profileForm.getPackages().toArray(), ",");
 			neoBmProfile.setPackages(packages);
@@ -170,32 +172,27 @@ public class BaseHandler {
 		return projectData;
 	}
 	
-	public BmServerData updateBmServer(BmServerData bmServer, AddBmServerForm addBmServerForm){
-		try{
-			if(Objects.isNull(bmServer)) throw new Exception("BM Sever not present with the given id.");
-			if(!StringUtils.isEmpty(addBmServerForm.getName())){
-				bmServer.setName(addBmServerForm.getName());
-			}
-			if(!StringUtils.isEmpty(addBmServerForm.getInterfaceMac())){
-				bmServer.setInterfaceMac(addBmServerForm.getInterfaceMac());
-			}
-			if(!StringUtils.isEmpty(addBmServerForm.getPmAddress())){
-				bmServer.setPmAddress(addBmServerForm.getPmAddress());
-			}
-			if(!StringUtils.isEmpty(addBmServerForm.getPmName())){
-				bmServer.setPmName(addBmServerForm.getPmName());
-			}
-			if(!StringUtils.isEmpty(addBmServerForm.getPmPassword())){
-				bmServer.setPmPassword(addBmServerForm.getPmPassword());
-			}
-			if(!StringUtils.isEmpty(addBmServerForm.getPmType())){
-				bmServer.setPmType(addBmServerForm.getPmType());
-			}
-			if(addBmServerForm.getProjectId().MAX_VALUE > 0){
-				bmServer.setProjectId(addBmServerForm.getProjectId());
-			}
-		}catch(Exception e){
-			e.printStackTrace();
+	public BmServerData updateBmServer(BmServerData bmServer, AddBmServerForm addBmServerForm) {
+		if (!StringUtils.isEmpty(addBmServerForm.getName())) {
+			bmServer.setName(addBmServerForm.getName());
+		}
+		if (!StringUtils.isEmpty(addBmServerForm.getInterfaceMac())) {
+			bmServer.setInterfaceMac(addBmServerForm.getInterfaceMac());
+		}
+		if (!StringUtils.isEmpty(addBmServerForm.getPmAddress())) {
+			bmServer.setPmAddress(addBmServerForm.getPmAddress());
+		}
+		if (!StringUtils.isEmpty(addBmServerForm.getPmName())) {
+			bmServer.setPmName(addBmServerForm.getPmName());
+		}
+		if (!StringUtils.isEmpty(addBmServerForm.getPmPassword())) {
+			bmServer.setPmPassword(addBmServerForm.getPmPassword());
+		}
+		if (!StringUtils.isEmpty(addBmServerForm.getPmType())) {
+			bmServer.setPmType(addBmServerForm.getPmType());
+		}
+		if (addBmServerForm.getProjectId() != null) {
+			bmServer.setProjectId(addBmServerForm.getProjectId());
 		}
 		return bmServer;
 	}
