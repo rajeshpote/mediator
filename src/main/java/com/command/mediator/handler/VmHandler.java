@@ -13,7 +13,7 @@ import com.command.mediator.webservice.controller.CobblerController;
 import com.command.mediator.webservice.form.VmDeployForm;
 
 @Service
-public class VMProfileHandler extends BaseHandler{
+public class VmHandler extends BaseHandler{
 
 	private static Logger LOGGER = LoggerFactory.getLogger(CobblerController.class);
 

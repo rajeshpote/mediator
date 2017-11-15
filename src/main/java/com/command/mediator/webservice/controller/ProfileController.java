@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.BMProfileHandler;
-import com.command.mediator.handler.VMProfileHandler;
+import com.command.mediator.handler.VmHandler;
 import com.command.mediator.model.MediatorResponseModel;
 import com.command.mediator.model.MetadataModel;
 import com.command.mediator.pojo.NeoProfileData;
@@ -30,7 +30,7 @@ public class ProfileController extends BaseController {
 	private BMProfileHandler bmProfileHandler;
 
 	@Resource
-	private VMProfileHandler vmProfileHandler;
+	private VmHandler vmProfileHandler;
 	
 	@RequestMapping(value = "/bm", method = RequestMethod.POST)
 	public ResponseEntity<MediatorResponseModel> saveBmProfile(@Valid @RequestBody BmProfileForm profileForm,

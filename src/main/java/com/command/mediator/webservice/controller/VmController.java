@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.command.mediator.handler.VMProfileHandler;
+import com.command.mediator.handler.VmHandler;
 import com.command.mediator.model.MediatorResponseModel;
 import com.command.mediator.pojo.VmDeployData;
 import com.command.mediator.webservice.form.VmDeployForm;
@@ -20,12 +20,12 @@ import com.command.mediator.webservice.form.VmDeployForm;
 public class VmController extends BaseController{
 
 	@Resource
-	private VMProfileHandler vmProfileHandler;
+	private VmHandler vmHandler;
 	
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
 	public ResponseEntity<MediatorResponseModel> deployVm(@RequestBody VmDeployForm vmDeployForm)throws Exception{
 		try {
-			String response = vmProfileHandler.deployVm(vmDeployForm);
+			String response = vmHandler.deployVm(vmDeployForm);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();
