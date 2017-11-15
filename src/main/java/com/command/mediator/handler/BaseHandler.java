@@ -199,34 +199,14 @@ public class BaseHandler {
 	
 	public VmProfileData createVmProfile(VmProfileForm vmProfileForm) {
 		VmProfileData vmProfile = new VmProfileData();
-		List<StorageInfo> storageInfoList = new ArrayList<StorageInfo>();
-		List<NetworkInfo> networkInfoList = new ArrayList<NetworkInfo>();
-		vmProfile.setImage(vmProfileForm.getImage());
-		vmProfile.setCpu(vmProfileForm.getCpu());
-		vmProfile.setProfileDescription(vmProfileForm.getProfileDescription());
-		vmProfile.setProfileName(vmProfileForm.getProfileName());
-		vmProfile.setRamMemory(vmProfileForm.getRamMemory());
-
-		for (StorageInfoForm storageInfoForm : vmProfileForm.getStorageInfo()) {
-			StorageInfo storageInfo = createStorageInfoObject(storageInfoForm);
-			storageInfoList.add(storageInfo);
-		}
-		vmProfile.setStorageInfo(storageInfoList);
-		
-		for (NetworkInfoForm networkInfoForm : vmProfileForm.getNetworkInfo()) {
-			NetworkInfo networkInfo = createNetworkInfoObject(networkInfoForm);
-			networkInfoList.add(networkInfo);
-		}
-		vmProfile.setNetworkInfo(networkInfoList);
+		vmProfile.setIpAddress(vmProfileForm.getIpAddress());
+		vmProfile.setUserName(vmProfileForm.getUserName());
+		vmProfile.setPassword(vmProfileForm.getPassword());
+		vmProfile.setVmName(vmProfileForm.getVmName());
+		vmProfile.setCpus(vmProfileForm.getCpus());
+		vmProfile.setRam(vmProfileForm.getRam());
+		vmProfile.setStorage(vmProfileForm.getStorage());
 		return vmProfile;
-	}
-
-	public StorageInfo createStorageInfoObject(StorageInfoForm storageInfoForm){
-		StorageInfo storageInfo = new StorageInfo();
-		storageInfo.setDisk(storageInfoForm.getDisk());
-		storageInfo.setSpacePercentage(storageInfoForm.getSpacePercentage());
-		storageInfo.setMountPath(storageInfoForm.getMountPath());
-		return storageInfo;
 	}
 
 }

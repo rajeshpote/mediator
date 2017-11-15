@@ -2,10 +2,10 @@ package com.command.mediator.webservice.form;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class VmProfileForm {
+public class DeployVmProfileForm {
 
 	@JsonProperty("ip_address")
-	private String ipAddress;
+	private String image;
 	
 	@JsonProperty("user_name")
 	private String userName;
@@ -14,10 +14,10 @@ public class VmProfileForm {
 	private String password;
 	
 	@JsonProperty("vm_name")
-	private String vmName;
+	private String vm_name;
 	
-	@JsonProperty("cpus")
-	private String cpus;
+	@JsonProperty("cpu")
+	private String cpu;
 	
 	@JsonProperty("ram")
 	private String ram;
@@ -25,12 +25,12 @@ public class VmProfileForm {
 	@JsonProperty("storage")
 	private Integer storage;
 
-	public String getIpAddress() {
-		return ipAddress;
+	public String getImage() {
+		return image;
 	}
 
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public String getUserName() {
@@ -49,20 +49,20 @@ public class VmProfileForm {
 		this.password = password;
 	}
 
-	public String getVmName() {
-		return vmName;
+	public String getVm_name() {
+		return vm_name;
 	}
 
-	public void setVmName(String vmName) {
-		this.vmName = vmName;
+	public void setVm_name(String vm_name) {
+		this.vm_name = vm_name;
 	}
 
-	public String getCpus() {
-		return cpus;
+	public String getCpu() {
+		return cpu;
 	}
 
-	public void setCpus(String cpus) {
-		this.cpus = cpus;
+	public void setCpu(String cpu) {
+		this.cpu = cpu;
 	}
 
 	public String getRam() {

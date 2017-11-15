@@ -1,21 +1,11 @@
 package com.command.mediator.pojo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -26,35 +16,90 @@ public class VmProfileData {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name = "image")
-	@JsonProperty("image")
-	private String image;
+	@JsonProperty("ip_address")
+	@Column(name = "ip_address")
+	private String ipAddress;
 	
-	@Column(name = "profile_name")
-	@JsonProperty("profile_name")
-	private String profileName;
+	@JsonProperty("user_name")
+	@Column(name = "user_name")
+	private String userName;
 	
-	@Column(name = "profile_description")
-	@JsonProperty("profile_description")
-	private String profileDescription;
+	@JsonProperty("password")
+	@Column(name = "password")
+	private String password;
 	
-	@Column(name = "cpu")
-	@JsonProperty("cpu")
-	private String cpu;
+	@JsonProperty("vm_name")
+	@Column(name = "vm_name")
+	private String vmName;
 	
-	@Column(name = "ram_memory")
-	@JsonProperty("ram_memory")
-	private String ramMemory;
+	@JsonProperty("cpus")
+	@Column(name = "cpus")
+	private String cpus;
 	
-	@Column(name = "storage_info")
-	@JsonProperty("storage_info")
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<StorageInfo> storageInfo = new ArrayList<StorageInfo>();
+	@JsonProperty("ram")
+	@Column(name = "ram")
+	private String ram;
 	
-	@Column(name = "network_info")
-	@JsonProperty("network_info")
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<NetworkInfo> networkInfo = new ArrayList<NetworkInfo>();
+	@JsonProperty("storage")
+	@Column(name = "storage")
+	private Integer storage;
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	
+	public String getVmName() {
+		return vmName;
+	}
+
+	public void setVmName(String vmName) {
+		this.vmName = vmName;
+	}
+
+	public String getCpus() {
+		return cpus;
+	}
+
+	public void setCpus(String cpus) {
+		this.cpus = cpus;
+	}
+
+	public String getRam() {
+		return ram;
+	}
+
+	public void setRam(String ram) {
+		this.ram = ram;
+	}
+
+	public Integer getStorage() {
+		return storage;
+	}
+
+	public void setStorage(Integer storage) {
+		this.storage = storage;
+	}
 
 	public Integer getId() {
 		return id;
@@ -63,62 +108,4 @@ public class VmProfileData {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public String getProfileName() {
-		return profileName;
-	}
-
-	public void setProfileName(String profileName) {
-		this.profileName = profileName;
-	}
-
-	public String getProfileDescription() {
-		return profileDescription;
-	}
-
-	public void setProfileDescription(String profileDescription) {
-		this.profileDescription = profileDescription;
-	}
-
-	public String getCpu() {
-		return cpu;
-	}
-
-	public void setCpu(String cpu) {
-		this.cpu = cpu;
-	}
-
-	public String getRamMemory() {
-		return ramMemory;
-	}
-
-	public void setRamMemory(String ramMemory) {
-		this.ramMemory = ramMemory;
-	}
-
-	public List<StorageInfo> getStorageInfo() {
-		return storageInfo;
-	}
-
-	public void setStorageInfo(List<StorageInfo> storageInfo) {
-		this.storageInfo = storageInfo;
-	}
-
-	public List<NetworkInfo> getNetworkInfo() {
-		return networkInfo;
-	}
-
-	public void setNetworkInfo(List<NetworkInfo> networkInfo) {
-		this.networkInfo = networkInfo;
-	}
-
-	
 }
