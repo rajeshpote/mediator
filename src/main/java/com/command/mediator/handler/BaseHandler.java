@@ -14,7 +14,7 @@ import com.command.mediator.pojo.NetworkInfo;
 import com.command.mediator.pojo.PartitioningInfo;
 import com.command.mediator.pojo.ProjectData;
 import com.command.mediator.pojo.StorageInfo;
-import com.command.mediator.pojo.VmProfileData;
+import com.command.mediator.pojo.VmDeployData;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ConfigureDhcpForm;
@@ -24,9 +24,23 @@ import com.command.mediator.webservice.form.NetworkInfoForm;
 import com.command.mediator.webservice.form.PartitioningInfoForm;
 import com.command.mediator.webservice.form.ProjectForm;
 import com.command.mediator.webservice.form.StorageInfoForm;
-import com.command.mediator.webservice.form.VmProfileForm;
+import com.command.mediator.webservice.form.VmDeployForm;
 
 public class BaseHandler {
+	
+	private String DEPLOY_VM_COMMAND = "/home/neo/scripts/vm-deploy_iso.sh ";
+	
+	protected String getVmDeployCommand(VmDeployForm vmDeployForm) {
+		StringBuilder command = new StringBuilder(DEPLOY_VM_COMMAND);
+		command.append(vmDeployForm.getIpAddress()).append(" ")
+		.append(vmDeployForm.getUserName()).append(" ")
+		.append(vmDeployForm.getPassword()).append(" ")
+		.append(vmDeployForm.getVmName()).append(" ")
+		.append(vmDeployForm.getRam()).append(" ")
+		.append(vmDeployForm.getCpus()).append(" ")
+		.append(vmDeployForm.getStorage()).append(" ");
+		return command.toString();
+	}
 
 	public String getDhcpCommand(ConfigureDhcpForm configureDhcpForm) {
 		StringBuilder dhcpCommand = new StringBuilder("./configure-dhcp.sh");
@@ -197,8 +211,8 @@ public class BaseHandler {
 		return bmServer;
 	}
 	
-	public VmProfileData createVmProfile(VmProfileForm vmProfileForm) {
-		VmProfileData vmProfile = new VmProfileData();
+	public VmDeployData createVmProfile(VmDeployForm vmProfileForm) {
+		VmDeployData vmProfile = new VmDeployData();
 		vmProfile.setIpAddress(vmProfileForm.getIpAddress());
 		vmProfile.setUserName(vmProfileForm.getUserName());
 		vmProfile.setPassword(vmProfileForm.getPassword());

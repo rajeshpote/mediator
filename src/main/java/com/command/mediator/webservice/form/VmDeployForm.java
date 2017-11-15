@@ -2,7 +2,7 @@ package com.command.mediator.webservice.form;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class VmProfileForm {
+public class VmDeployForm {
 
 	@JsonProperty("ip_address")
 	private String ipAddress;

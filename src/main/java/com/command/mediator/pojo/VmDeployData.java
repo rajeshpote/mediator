@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "vm_profile")
-public class VmProfileData {
+@Table(name = "vm_deploy")
+public class VmDeployData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +19,10 @@ public class VmProfileData {
 	@JsonProperty("ip_address")
 	@Column(name = "ip_address")
 	private String ipAddress;
+	
+	@JsonProperty("status")
+	@Column(name = "status")
+	private String status = "deployed";
 	
 	@JsonProperty("user_name")
 	@Column(name = "user_name")
@@ -108,4 +112,13 @@ public class VmProfileData {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

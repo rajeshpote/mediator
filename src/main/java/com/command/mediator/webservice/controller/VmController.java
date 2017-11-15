@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.VMProfileHandler;
 import com.command.mediator.model.MediatorResponseModel;
-import com.command.mediator.pojo.VmProfileData;
-import com.command.mediator.webservice.form.VmProfileForm;
+import com.command.mediator.pojo.VmDeployData;
+import com.command.mediator.webservice.form.VmDeployForm;
 
 @RestController
 @RequestMapping(value = "/mediator/v1/vm", consumes = "application/json", produces = "application/json")
@@ -23,9 +23,9 @@ public class VmController extends BaseController{
 	private VMProfileHandler vmProfileHandler;
 	
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
-	public ResponseEntity<MediatorResponseModel> saveVmProfile(@RequestBody VmProfileForm vmProfileForm)throws Exception{
+	public ResponseEntity<MediatorResponseModel> deployVm(@RequestBody VmDeployForm vmDeployForm)throws Exception{
 		try {
-			String response = vmProfileHandler.deployVmProfile(vmProfileForm);
+			String response = vmProfileHandler.deployVm(vmDeployForm);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();

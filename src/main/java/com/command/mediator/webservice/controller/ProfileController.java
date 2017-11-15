@@ -17,9 +17,9 @@ import com.command.mediator.handler.VMProfileHandler;
 import com.command.mediator.model.MediatorResponseModel;
 import com.command.mediator.model.MetadataModel;
 import com.command.mediator.pojo.NeoProfileData;
-import com.command.mediator.pojo.VmProfileData;
+import com.command.mediator.pojo.VmDeployData;
 import com.command.mediator.webservice.form.BmProfileForm;
-import com.command.mediator.webservice.form.VmProfileForm;
+import com.command.mediator.webservice.form.VmDeployForm;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -85,13 +85,13 @@ public class ProfileController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/vm", method = RequestMethod.POST)
-	public ResponseEntity<MediatorResponseModel> saveVmProfile(@Valid @RequestBody VmProfileForm vmProfileForm,
+	public ResponseEntity<MediatorResponseModel> saveVmProfile(@Valid @RequestBody VmDeployForm vmProfileForm,
 			BindingResult validationResults) {
 		try {
 			if (validationResults.hasErrors()) {
 				return prepareValidationErrorResponse(validationResults, 0);
 			}
-			VmProfileData response = vmProfileHandler.saveVmProfile(vmProfileForm);
+			VmDeployData response = vmProfileHandler.saveVm(vmProfileForm);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();
