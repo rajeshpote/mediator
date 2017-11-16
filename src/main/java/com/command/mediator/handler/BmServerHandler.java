@@ -32,6 +32,8 @@ public class BmServerHandler extends BaseHandler {
 	private String PROV_COMMAND = "./scripts/provBmServer.sh";
 	
 	private String STOP_SERVER_COMMAND = "./scripts/stopProvBmServer.sh";
+	
+	private String DEPROVISION_SERVER_COMMAND = "/home/neo/scripts/deProvBmServer.sh ";
 
 	@Resource
 	private BmServerRepository bmServerRepository;
@@ -117,6 +119,16 @@ public class BmServerHandler extends BaseHandler {
 			throw new Exception("Server name must be specified.");
 		}
 		output = CommandExecutor.execute(STOP_SERVER_COMMAND + " " + serverName);
+		if (output != null && output.contains("exception on server"));
+		return output;
+	}
+
+	public String deprovisionBmServer(String serverName) throws Exception {
+		String output = null;
+		if(StringUtils.isEmpty(serverName)){
+			throw new Exception("Server name must be specified.");
+		}
+		output = CommandExecutor.execute(DEPROVISION_SERVER_COMMAND + serverName);
 		if (output != null && output.contains("exception on server"));
 		return output;
 	}

@@ -106,4 +106,16 @@ public class BmController extends BaseController{
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 	}
+	
+	@RequestMapping(value = "/deprovision", method = RequestMethod.GET)
+	public ResponseEntity<MediatorResponseModel> deprovisionBmServer(@RequestParam(name = "server-name") String serverName) {
+		try {
+			String response = bmServerHandler.deprovisionBmServer(serverName);
+			return prepareSuccessResponse(response, 1);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
 }
