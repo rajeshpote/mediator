@@ -2,6 +2,8 @@ package com.command.mediator.webservice.form;
 
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,6 +24,9 @@ public class NeoImageForm {
 	
 	@JsonProperty("iso_path")
 	private String isoPath;
+	
+	@JsonProperty("file") 
+	private MultipartFile file;
 
 	public String getImageName() {
 		return imageName;
@@ -61,6 +66,14 @@ public class NeoImageForm {
 
 	public void setOsType(String osType) {
 		this.osType = osType;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 	@Override

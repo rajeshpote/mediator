@@ -1,6 +1,9 @@
 package com.command.mediator.handler;
 
 import java.awt.font.ImageGraphicAttribute;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +11,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.persistent.NeoImageRepository;
@@ -20,7 +24,7 @@ public class NeoImageHandler extends BaseHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CobblerHandler.class);
 	
 	private String MOUNT_COMMAND = "./scripts/mountImage.sh";
-
+	
 	@Resource
 	private NeoImageRepository neoImageRepository;
 	
@@ -29,11 +33,26 @@ public class NeoImageHandler extends BaseHandler {
 
 	public NeoImageData uploadImage(NeoImageForm neoImageForm) {
 		NeoImageData neoImage = createImageObject(neoImageForm);
-		neoImage = neoImageRepository.save(neoImage);
-		LOGGER.info("Running mount script");
-		CommandExecutor.execute(MOUNT_COMMAND + " " + neoImage.getImageName() + " " + neoImage.getId());
-		LOGGER.info("Mounted the image: {} ", neoImage);
-		return neoImage;
+		if(storeFile(neoImageForm.getFile(), neoImage.getIsoPath())){
+			neoImage = neoImageRepository.save(neoImage);
+			LOGGER.info("Running mount script");
+			CommandExecutor.execute(MOUNT_COMMAND + " " + neoImage.getImageName() + " " + neoImage.getId());
+			LOGGER.info("Mounted the image: {} ", neoImage);
+			return neoImage;
+		}
+		return null;
+		
+	}
+	
+	private boolean storeFile(MultipartFile file,String location){
+		try {
+			Path rootLocation = Paths.get(location);
+			long count = Files.copy(file.getInputStream(),rootLocation.resolve(file.getOriginalFilename()));
+			LOGGER.info("File:{} successfully uploaded at loaction:{}",file.getOriginalFilename(),location);
+			return count>0?true:false;
+		} catch (Exception e) {
+        	throw new RuntimeException("Fail to upload file");
+        }
 	}
 
 	public List<NeoImageData> getImageList() {

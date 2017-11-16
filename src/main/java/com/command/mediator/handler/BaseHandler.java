@@ -160,7 +160,7 @@ public class BaseHandler {
 		neoImage.setDescription(neoImageForm.getDescription());
 		neoImage.setOsType(neoImageForm.getOsType());
 		neoImage.setMountPath("/mnt/neo");
-		neoImage.setIsoPath("/home/neo/iso-images");
+		neoImage.setIsoPath("/home/neo/iso-images/");
 		return neoImage;
 	}
 
@@ -221,6 +221,14 @@ public class BaseHandler {
 		vmProfile.setRam(vmProfileForm.getRam());
 		vmProfile.setStorage(vmProfileForm.getStorage());
 		return vmProfile;
+	}
+
+	public StorageInfo createStorageInfoObject(StorageInfoForm storageInfoForm){
+		StorageInfo storageInfo = new StorageInfo();
+		storageInfo.setDisk(storageInfoForm.getDisk());
+		storageInfo.setSpacePercentage(storageInfoForm.getSpacePercentage());
+		storageInfo.setMountPath(storageInfoForm.getMountPath());
+		return storageInfo;
 	}
 
 }

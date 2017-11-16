@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.command.mediator.handler.NeoImageHandler;
 import com.command.mediator.model.MediatorResponseModel;
@@ -21,7 +23,7 @@ import com.command.mediator.webservice.form.NeoImageForm;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/mediator/v1/image", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/mediator/v1/image",produces = "application/json")
 public class NeoImageController extends BaseController {
 
 	@Resource
@@ -34,6 +36,9 @@ public class NeoImageController extends BaseController {
 			if (validationResults.hasErrors()) {
 				 return prepareValidationErrorResponse(validationResults,0);
 			}
+			if (neoImageForm.getFile().isEmpty()) {
+				return prepareErrorResponse(new Exception("Please select a file to upload"), HttpStatus.INTERNAL_SERVER_ERROR.value(),"Please select a file to upload");
+	        }
 			NeoImageData data = neoImageHandler.uploadImage(neoImageForm);
 			return prepareSuccessResponse(data, 1);
 		} catch (Throwable e) {
