@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.BMProfileHandler;
 import com.command.mediator.handler.VmHandler;
 import com.command.mediator.model.MediatorResponseModel;
-import com.command.mediator.model.MetadataModel;
+import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.pojo.VmDeployData;
 import com.command.mediator.webservice.form.BmProfileForm;
@@ -52,6 +52,17 @@ public class ProfileController extends BaseController {
 		try {
 			List<NeoProfileData> list = bmProfileHandler.getNeoProfile();
 			return prepareSuccessResponse(list, list == null?0:list.size());
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/bm/{profile_id}",method = RequestMethod.GET)
+	public ResponseEntity<MediatorResponseModel> getProfile(@PathVariable("profile_id") String profileId) {
+		try {
+			NeoBmProfileData data = bmProfileHandler.getProfile(profileId);
+			return prepareSuccessResponse(data, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());

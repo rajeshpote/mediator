@@ -44,4 +44,9 @@ public class BMProfileHandler extends BaseHandler {
 		neoBmProfileRepository.delete(id);
 		LOGGER.info("Neo Profile deleted: {} ");
 	}
+
+	public NeoBmProfileData getProfile(String profileId) {
+		NeoBmProfileData neoBmProfile = neoBmProfileRepository.findOne(Integer.valueOf(profileId));
+		return neoBmProfile;
+	}
 }

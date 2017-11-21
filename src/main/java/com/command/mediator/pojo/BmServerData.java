@@ -1,12 +1,16 @@
 package com.command.mediator.pojo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -56,6 +60,17 @@ public class BmServerData {
 	
 	@Column(name = "modified_date")
 	private Date modifiedDate;
+	
+	@JsonProperty("disks")
+	@Column(name = "disks")
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<BmDiskInfo> disks = new ArrayList<BmDiskInfo>();
+	
+	@JsonProperty("networks")
+	@Column(name = "networks")
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<BmNetworkInfo> networks = new ArrayList<BmNetworkInfo>();;
+	
 
 	public Integer getId() {
 		return id;
@@ -145,11 +160,28 @@ public class BmServerData {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public List<BmDiskInfo> getDisks() {
+		return disks;
+	}
+
+	public void setDisks(List<BmDiskInfo> disks) {
+		this.disks = disks;
+	}
+
+	public List<BmNetworkInfo> getNetworks() {
+		return networks;
+	}
+
+	public void setNetworks(List<BmNetworkInfo> networks) {
+		this.networks = networks;
+	}
+
 	@Override
 	public String toString() {
 		return "BmServerData [id=" + id + ", name=" + name + ", interfaceMac=" + interfaceMac + ", pmType=" + pmType
-				+ ", pmAddress=" + pmAddress + ", pmName=" + pmName + ", pmPassword=" + pmPassword + ", status="
-				+ status + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + "]";
+				+ ", pmAddress=" + pmAddress + ", pmName=" + pmName + ", pmPassword=" + pmPassword + ", projectId="
+				+ projectId + ", status=" + status + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate
+				+ ", disks=" + disks + ", networks=" + networks + "]";
 	}
 	
 }

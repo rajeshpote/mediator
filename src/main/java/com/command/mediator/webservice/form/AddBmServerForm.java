@@ -1,5 +1,9 @@
 package com.command.mediator.webservice.form;
 
+import java.util.List;
+
+import com.command.mediator.pojo.BmDiskInfo;
+import com.command.mediator.pojo.BmNetworkInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AddBmServerForm {
@@ -24,6 +28,13 @@ public class AddBmServerForm {
 	
 	@JsonProperty("project_id")
 	private Integer projectId;
+	
+	@JsonProperty("disks")
+	private List<BmDiskInfo> disks;
+	
+	@JsonProperty("networks")
+	private List<BmNetworkInfo> networks;
+	
 	
 	public Integer getProjectId() {
 		return projectId;
@@ -66,6 +77,18 @@ public class AddBmServerForm {
 	}
 	public void setPmPassword(String pmPassword) {
 		this.pmPassword = pmPassword;
+	}
+	public List<BmDiskInfo> getDisks() {
+		return disks;
+	}
+	public void setDisks(List<BmDiskInfo> disks) {
+		this.disks = disks;
+	}
+	public List<BmNetworkInfo> getNetworks() {
+		return networks;
+	}
+	public void setNetworks(List<BmNetworkInfo> networks) {
+		this.networks = networks;
 	}
 	
 }

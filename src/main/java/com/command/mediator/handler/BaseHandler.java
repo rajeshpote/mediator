@@ -3,7 +3,6 @@ package com.command.mediator.handler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.util.StringUtils;
 import com.command.mediator.pojo.BmServerData;
@@ -175,6 +174,12 @@ public class BaseHandler {
 		bmServer.setProjectId(addBmServerForm.getProjectId());
 		bmServer.setCreatedDate(new Date());
 		bmServer.setStatus("unallocated");
+		if(addBmServerForm.getNetworks() != null){
+			bmServer.setNetworks(addBmServerForm.getNetworks());
+		}
+		if(addBmServerForm.getDisks()!= null){
+			bmServer.setDisks(addBmServerForm.getDisks());
+		}
 		return bmServer;
 	}
 	
