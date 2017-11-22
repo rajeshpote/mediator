@@ -1,7 +1,7 @@
 package com.command.mediator.handler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,12 +16,10 @@ import com.command.mediator.persistent.BmServerRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
 import com.command.mediator.persistent.NeoImageRepository;
 import com.command.mediator.persistent.NeoProfileRepository;
-import com.command.mediator.persistent.ProjectRepository;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
-import com.command.mediator.pojo.ProjectData;
 import com.command.mediator.util.StringUtils;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.ProvisionBMServerForm;
@@ -52,8 +50,6 @@ public class BmServerHandler extends BaseHandler {
 	@Resource
 	private NeoImageRepository neoImageRepository;
 
-	@Resource
-	private ProjectRepository projectRepository;
 
 	public BmServerData addBmServer(AddBmServerForm addBmServerForm) {
 		BmServerData bmServer = createBmServerObject(addBmServerForm);
@@ -63,17 +59,9 @@ public class BmServerHandler extends BaseHandler {
 		return bmServer;
 	}
 	
-	public ProjectData updateProjectRepository(BmServerData bmServer) {
-		ProjectData projectData = projectRepository.findOne(bmServer.getProjectId());
-		int UnallocatedBMCount = projectData.getUnallocatedBMs();
-		projectData.setUnallocatedBMs(++UnallocatedBMCount);
-		projectData = projectRepository.save(projectData);
-		LOGGER.info("Project Data updated: {} " + projectData);
-		return projectData;
-	}
-
 	public List<BmServerData> getBmServer() {
 		List<BmServerData> bmServerList = (List<BmServerData>) bmServerRepository.findAll();
+		Collections.sort(bmServerList);
 		LOGGER.info("BM Server found: {} " + bmServerList);
 		return bmServerList;
 	}

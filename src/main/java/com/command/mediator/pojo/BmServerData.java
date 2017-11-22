@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "bm_server")
-public class BmServerData {
+public class BmServerData implements Comparable<BmServerData> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -183,5 +183,12 @@ public class BmServerData {
 				+ projectId + ", status=" + status + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate
 				+ ", disks=" + disks + ", networks=" + networks + "]";
 	}
+
+	@Override
+	public int compareTo(BmServerData obj) {
+		return obj.getCreatedDate().compareTo(this.getCreatedDate());
+	}
+	
+	
 	
 }

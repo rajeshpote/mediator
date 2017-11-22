@@ -188,6 +188,7 @@ public class BaseHandler {
 		projectData.setProjectNane(projectForm.getProjectNane());
 		projectData.setDepartment(projectForm.getDepartment());
 		projectData.setProjectDescription(projectForm.getProjectDescription());
+		projectData.setCreatedOn(new Date());
 		return projectData;
 	}
 	

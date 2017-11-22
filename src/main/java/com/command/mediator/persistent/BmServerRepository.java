@@ -7,4 +7,6 @@ import com.command.mediator.pojo.BmServerData;
 @Repository
 public interface BmServerRepository extends CrudRepository<BmServerData, Integer>{
 
+	public long countByProjectIdAndStatus(Integer profileId,String status);
+
 }
