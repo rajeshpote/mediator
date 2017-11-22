@@ -1,5 +1,8 @@
 package com.command.mediator.pojo;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +30,25 @@ public class ProjectData {
 	@JsonProperty("department")
 	private String department;
 
+	@Column(name = "allocated_BMs")
+	@JsonProperty("allocated_BMs")
+	private Integer allocatedBMs = 0;
+	
+	@Column(name = "unallocated_BMs")
+	@JsonProperty("unallocated_BMs")
+	private Integer unallocatedBMs = 0;
+	
+	@Column(name = "running_VMs")
+	@JsonProperty("running_VMs")
+	private Integer runningVMs = 0;
+	
+	@Column(name = "stopped_VMs")
+	@JsonProperty("stopped_VMs")
+	private Integer stoppedVMs = 0;
+	
+	@Column(name = "created_on")
+	@JsonProperty("created_on")
+	private Calendar createdOn ;
 
 	public Integer getId() {
 		return id;
@@ -60,4 +82,44 @@ public class ProjectData {
 		this.department = department;
 	}
 
+	public Integer getAllocatedBMs() {
+		return allocatedBMs;
+	}
+
+	public void setAllocatedBMs(Integer allocatedBMs) {
+		this.allocatedBMs = allocatedBMs;
+	}
+
+	public Integer getUnallocatedBMs() {
+		return unallocatedBMs;
+	}
+
+	public void setUnallocatedBMs(Integer unallocatedBMs) {
+		this.unallocatedBMs = unallocatedBMs;
+	}
+
+	public Integer getRunningVMs() {
+		return runningVMs;
+	}
+
+	public void setRunningVMs(Integer runningVMs) {
+		this.runningVMs = runningVMs;
+	}
+
+	public Integer getStoppedVMs() {
+		return stoppedVMs;
+	}
+
+	public void setStoppedVMs(Integer stoppedVMs) {
+		this.stoppedVMs = stoppedVMs;
+	}
+
+	public Calendar getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Calendar createdOn) {
+		this.createdOn = createdOn;
+	}
+	
 }

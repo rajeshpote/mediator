@@ -108,9 +108,9 @@ public class BmController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/deprovision", method = RequestMethod.GET)
-	public ResponseEntity<MediatorResponseModel> deprovisionBmServer(@RequestParam(name = "server-name") String serverName) {
+	public ResponseEntity<MediatorResponseModel> deprovisionBmServer(@RequestParam(name = "server-name") String serverNames) {
 		try {
-			String response = bmServerHandler.deprovisionBmServer(serverName);
+			String response = bmServerHandler.deprovisionBmServer(serverNames);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block

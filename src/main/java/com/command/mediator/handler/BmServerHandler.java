@@ -16,10 +16,12 @@ import com.command.mediator.persistent.BmServerRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
 import com.command.mediator.persistent.NeoImageRepository;
 import com.command.mediator.persistent.NeoProfileRepository;
+import com.command.mediator.persistent.ProjectRepository;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
+import com.command.mediator.pojo.ProjectData;
 import com.command.mediator.util.StringUtils;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.ProvisionBMServerForm;
@@ -50,14 +52,24 @@ public class BmServerHandler extends BaseHandler {
 	@Resource
 	private NeoImageRepository neoImageRepository;
 
-	// @Resource
-	// private ProvisionBmServer provisionBmServer;
+	@Resource
+	private ProjectRepository projectRepository;
 
 	public BmServerData addBmServer(AddBmServerForm addBmServerForm) {
 		BmServerData bmServer = createBmServerObject(addBmServerForm);
 		bmServer = bmServerRepository.save(bmServer);
+		//updateProjectRepository(bmServer);
 		LOGGER.info("BM Server added: {} " + bmServer);
 		return bmServer;
+	}
+	
+	public ProjectData updateProjectRepository(BmServerData bmServer) {
+		ProjectData projectData = projectRepository.findOne(bmServer.getProjectId());
+		int UnallocatedBMCount = projectData.getUnallocatedBMs();
+		projectData.setUnallocatedBMs(++UnallocatedBMCount);
+		projectData = projectRepository.save(projectData);
+		LOGGER.info("Project Data updated: {} " + projectData);
+		return projectData;
 	}
 
 	public List<BmServerData> getBmServer() {
@@ -88,6 +100,12 @@ public class BmServerHandler extends BaseHandler {
 				} else {
 					bmServer.setStatus("allocated");
 					bmServer = bmServerRepository.save(bmServer);
+//					ProjectData projectData = projectRepository.findOne(bmServer.getProjectId());
+//					int allocatedBmCount = projectData.getAllocatedBMs();
+//					projectData.setAllocatedBMs(++allocatedBmCount);
+//					int unAllocatedBmCount = projectData.getUnallocatedBMs();
+//					projectData.setUnallocatedBMs(--unAllocatedBmCount);
+//					projectRepository.save(projectData);
 				}
 				
 			}else {
@@ -123,12 +141,15 @@ public class BmServerHandler extends BaseHandler {
 		return output;
 	}
 
-	public String deprovisionBmServer(String serverName) throws Exception {
+	public String deprovisionBmServer(String serverNames) throws Exception {
 		String output = null;
-		if(StringUtils.isEmpty(serverName)){
+		if(StringUtils.isEmpty(serverNames)){
 			throw new Exception("Server name must be specified.");
 		}
-		output = CommandExecutor.execute(DEPROVISION_SERVER_COMMAND + serverName);
+		String[] servers = serverNames.split(",");
+		for(int i = 0 ; i < servers.length ; i++){
+			output = CommandExecutor.execute(DEPROVISION_SERVER_COMMAND + servers[i]);	
+		}
 		if (output != null && output.contains("exception on server"));
 		return output;
 	}
