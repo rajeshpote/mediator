@@ -51,7 +51,7 @@ public class ProfileController extends BaseController {
 	@RequestMapping(value = "/bm", method = RequestMethod.GET)
 	public ResponseEntity<MediatorResponseModel> getBmProfile() {
 		try {
-			List<NeoProfileData> list = bmProfileHandler.getNeoProfile();
+			List<NeoBmProfileData> list = bmProfileHandler.getNeoBmProfile();
 			return prepareSuccessResponse(list, list == null?0:list.size());
 		} catch (Throwable e) {
 			e.printStackTrace();

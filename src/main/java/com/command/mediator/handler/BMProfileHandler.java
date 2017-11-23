@@ -49,6 +49,12 @@ public class BMProfileHandler extends BaseHandler {
 		return bmProfileList;
 	}
 
+	public List<NeoBmProfileData> getNeoBmProfile() {
+		List<NeoBmProfileData> bmProfileList = (List<NeoBmProfileData>) neoBmProfileRepository.findAll();
+		LOGGER.info("Neo BM Profile list found: {} " + bmProfileList);
+		return bmProfileList;
+	}
+	
 	public void deleteBmProfile(int id) {
 		neoBmProfileRepository.delete(id);
 		LOGGER.info("Neo Profile deleted: {} ");

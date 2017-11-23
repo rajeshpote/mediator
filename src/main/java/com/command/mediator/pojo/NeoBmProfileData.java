@@ -55,7 +55,7 @@ public class NeoBmProfileData {
 	private List<PartitioningInfo> partitioningInfo = new ArrayList<PartitioningInfo>();
 	
 	@Column(name = "network_Info")
-	@JsonProperty("network_Info")
+	@JsonProperty("network_info")
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<NetworkInfo> networkInfo = new ArrayList<NetworkInfo>();
 	
