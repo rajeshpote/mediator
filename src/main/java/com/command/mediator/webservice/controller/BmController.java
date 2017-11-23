@@ -19,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.BmServerHandler;
 import com.command.mediator.model.MediatorResponseModel;
-import com.command.mediator.model.MetadataModel;
 import com.command.mediator.pojo.BmServerData;
-import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.webservice.form.AddBmServerForm;
-import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.ProvisionBMServerForm;
 
 @RestController
@@ -57,6 +54,16 @@ public class BmController extends BaseController{
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 	}
+	@RequestMapping(value  = "/find/{id}",method = RequestMethod.GET)
+	public ResponseEntity<MediatorResponseModel> getBareMetalServer(@PathVariable("id") String id) {
+		try {
+			BmServerData bmServer = bmServerHandler.getBmServer(id);
+			return prepareSuccessResponse(bmServer, 1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
 
 	@RequestMapping(value  = "/provision" ,method = RequestMethod.POST)
 	public ResponseEntity<MediatorResponseModel> provisionBmServer(@RequestBody ProvisionBMServerForm provisionBMProfileForm) {
@@ -77,6 +84,25 @@ public class BmController extends BaseController{
 				return prepareValidationErrorResponse(validationResults, 0);
 			}
 			BmServerData response = bmServerHandler.updateBmServer(id, addBmServerForm);
+			return prepareSuccessResponse(response, 1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public ResponseEntity<MediatorResponseModel> updateBm(
+    		@RequestParam(name = "bm_name", required = true) String bmName,
+    		@RequestParam(name = "assigned_ip", required = false) String assignedIp,
+    		@RequestParam(name = "status", required = false) String status,
+    		@RequestParam(name = "cpu", required = false) String cpu,
+    		@RequestParam(name = "memory", required = false) String memory,
+    		@RequestParam(name = "logpath", required = false) String logpath,
+    		@RequestParam(name = "username", required = false) String username,
+    		@RequestParam(name = "password", required = false) String password) {
+		try {
+			BmServerData response = bmServerHandler.updateBm(bmName, assignedIp,status,cpu,memory,logpath,username,password);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();

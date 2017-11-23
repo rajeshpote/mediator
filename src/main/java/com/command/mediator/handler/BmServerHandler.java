@@ -21,7 +21,6 @@ import com.command.mediator.persistent.NeoProfileRepository;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.BmsProfileHistoryData;
 import com.command.mediator.pojo.NeoBmProfileData;
-import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.util.StringUtils;
 import com.command.mediator.webservice.form.AddBmServerForm;
@@ -60,7 +59,6 @@ public class BmServerHandler extends BaseHandler {
 	public BmServerData addBmServer(AddBmServerForm addBmServerForm) {
 		BmServerData bmServer = createBmServerObject(addBmServerForm);
 		bmServer = bmServerRepository.save(bmServer);
-		//updateProjectRepository(bmServer);
 		LOGGER.info("BM Server added: {} " + bmServer);
 		return bmServer;
 	}
@@ -85,19 +83,19 @@ public class BmServerHandler extends BaseHandler {
 		for (String serverId : serverIds) {
 			BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(serverId));
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
-			if ("unallocated".equalsIgnoreCase(bmServer.getStatus())) {
+			if ("free".equalsIgnoreCase(bmServer.getStatus())) {
 				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoProfileData.getImageId()+"-x86_64" + " " + bmServer.getPmType() + 
 						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
 						+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm());
 				if (output != null && output.contains("exception on server")) {
-					bmServer.setStatus("Failed to allocate:"+output);
+					bmServer.setStatus("Failed to provision:"+output);
 				} else {
-					bmServer.setStatus("allocated");
+					bmServer.setStatus("provisioning");
 					bmServer = bmServerRepository.save(bmServer);
 					saveBmsProfileHistory(bmServer.getId(), neoBmProfileData.getId());
 				}
 			}else {
-				bmServer.setStatus("Already allocated!!!");
+				bmServer.setStatus("This BM Server is not free right now");
 			}
 			bmServerDataList.add(bmServer);
 		}
@@ -141,6 +139,12 @@ public class BmServerHandler extends BaseHandler {
 		if (output != null && output.contains("exception on server"));
 		return output;
 	}
+
+	public BmServerData getBmServer(String id) {
+		BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(id));
+		LOGGER.info("BM Server found: {} " + bmServer);
+		return bmServer;
+	}
 	
 	public void saveBmsProfileHistory(Integer bmServreId, Integer profileId){
 		BmsProfileHistoryData mappingData = new BmsProfileHistoryData();
@@ -148,5 +152,13 @@ public class BmServerHandler extends BaseHandler {
 		mappingData.setProfileId(profileId);
 		mappingData.setAllocationDate(new Date());
 		bmsProfileMappingRepository.save(mappingData);
+	}
+
+	public BmServerData updateBm(String bmName, String assignedIp, String status, String cpu, String memory,
+			String logpath, String username, String password) {
+		BmServerData savedBmServer = bmServerRepository.findByName(bmName);
+		savedBmServer = updateSavedBm(savedBmServer,assignedIp,status,cpu,memory,logpath,username,password);
+		bmServerRepository.save(savedBmServer);
+		return savedBmServer;
 	}
 }

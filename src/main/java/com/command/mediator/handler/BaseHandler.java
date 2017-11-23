@@ -173,7 +173,7 @@ public class BaseHandler {
 		bmServer.setPmPassword(addBmServerForm.getPmPassword());
 		bmServer.setProjectId(addBmServerForm.getProjectId());
 		bmServer.setCreatedDate(new Date());
-		bmServer.setStatus("unallocated");
+		bmServer.setStatus("free");
 		if(addBmServerForm.getNetworks() != null){
 			bmServer.setNetworks(addBmServerForm.getNetworks());
 		}
@@ -255,6 +255,33 @@ public class BaseHandler {
 			bmProfile.setPackages(packages);
 		}
 		return bmProfile;
+	}
+	
+	public BmServerData updateSavedBm(BmServerData savedBmServer, String assignedIp, String status, String cpu,
+			String memory, String logpath, String username, String password) {
+		if (com.command.mediator.util.StringUtils.isNotEmpty(assignedIp)) {
+			savedBmServer.setAssignedIp(assignedIp);
+		}
+		if (com.command.mediator.util.StringUtils.isNotEmpty(status)) {
+			savedBmServer.setStatus(status);
+		}
+		if (com.command.mediator.util.StringUtils.isNotEmpty(cpu)) {
+			savedBmServer.setCpu(cpu);
+		}
+		if (com.command.mediator.util.StringUtils.isNotEmpty(memory)) {
+			savedBmServer.setMemory(memory);
+		}
+		if (com.command.mediator.util.StringUtils.isNotEmpty(logpath)) {
+			savedBmServer.setLogpath(logpath);
+		}
+		if (com.command.mediator.util.StringUtils.isNotEmpty(username)) {
+			savedBmServer.setUsername(username);
+		}
+		if (com.command.mediator.util.StringUtils.isNotEmpty(password)) {
+			savedBmServer.setPassword(password);
+		}
+		savedBmServer.setModifiedDate(new Date());
+		return savedBmServer;
 	}
 
 }

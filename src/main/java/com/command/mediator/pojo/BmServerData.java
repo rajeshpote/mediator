@@ -55,6 +55,30 @@ public class BmServerData implements Comparable<BmServerData> {
 	@JsonProperty("status")
 	private String status;
 	
+	@Column(name = "assigned_ip")
+	@JsonProperty("assigned_ip")
+	private String assignedIp;
+	
+	@Column(name = "cpu")
+	@JsonProperty("cpu")
+	private String cpu;
+	
+	@Column(name = "memory")
+	@JsonProperty("memory")
+	private String memory;
+	
+	@Column(name = "logpath")
+	@JsonProperty("logpath")
+	private String logpath;
+	
+	@Column(name = "username")
+	@JsonProperty("username")
+	private String username;
+	
+	@Column(name = "password")
+	@JsonProperty("password")
+	private String password;
+	
 	@Column(name = "created_date")
 	private Date createdDate;
 	
@@ -174,6 +198,54 @@ public class BmServerData implements Comparable<BmServerData> {
 
 	public void setNetworks(List<BmNetworkInfo> networks) {
 		this.networks = networks;
+	}
+
+	public String getAssignedIp() {
+		return assignedIp;
+	}
+
+	public void setAssignedIp(String assignedIp) {
+		this.assignedIp = assignedIp;
+	}
+
+	public String getCpu() {
+		return cpu;
+	}
+
+	public void setCpu(String cpu) {
+		this.cpu = cpu;
+	}
+
+	public String getMemory() {
+		return memory;
+	}
+
+	public void setMemory(String memory) {
+		this.memory = memory;
+	}
+
+	public String getLogpath() {
+		return logpath;
+	}
+
+	public void setLogpath(String logpath) {
+		this.logpath = logpath;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
