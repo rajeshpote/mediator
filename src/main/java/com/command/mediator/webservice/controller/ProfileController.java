@@ -111,7 +111,7 @@ public class ProfileController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value = "/bm/{bm_server_id}",method = RequestMethod.GET)
+	@RequestMapping(value = "/bm",method = RequestMethod.GET)
 	public ResponseEntity<MediatorResponseModel> getAllocatedProfileList(@RequestParam("bm_server_id") Integer bmServerId) {
 		try {
 			List<NeoBmProfileData> list = bmProfileHandler.getAllProfileList(bmServerId);

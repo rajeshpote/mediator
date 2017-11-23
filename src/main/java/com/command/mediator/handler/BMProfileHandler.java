@@ -21,7 +21,7 @@ import com.command.mediator.webservice.form.BmProfileForm;
 @Service
 public class BMProfileHandler extends BaseHandler {
 	
-	private static Logger LOGGER = LoggerFactory.getLogger(CobblerController.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(BMProfileHandler.class);
 	
 	@Resource
 	private NeoProfileRepository neoProfileRepository;
