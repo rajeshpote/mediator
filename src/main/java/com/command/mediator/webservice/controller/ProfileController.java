@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.command.mediator.handler.BMProfileHandler;
 import com.command.mediator.handler.VmHandler;
@@ -104,6 +105,17 @@ public class ProfileController extends BaseController {
 			}
 			VmDeployData response = vmProfileHandler.saveVm(vmProfileForm);
 			return prepareSuccessResponse(response, 1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/bm/{bm_server_id}",method = RequestMethod.GET)
+	public ResponseEntity<MediatorResponseModel> getAllocatedProfileList(@RequestParam("bm_server_id") Integer bmServerId) {
+		try {
+			List<NeoBmProfileData> list = bmProfileHandler.getAllProfileList(bmServerId);
+			return prepareSuccessResponse(list, list == null?0:list.size());
 		} catch (Throwable e) {
 			e.printStackTrace();
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());

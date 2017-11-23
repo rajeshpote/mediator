@@ -2,6 +2,7 @@ package com.command.mediator.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.persistent.BmServerRepository;
+import com.command.mediator.persistent.BmsProfileHistoryRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
 import com.command.mediator.persistent.NeoImageRepository;
 import com.command.mediator.persistent.NeoProfileRepository;
 import com.command.mediator.pojo.BmServerData;
+import com.command.mediator.pojo.BmsProfileHistoryData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.pojo.NeoProfileData;
@@ -49,6 +52,9 @@ public class BmServerHandler extends BaseHandler {
 	
 	@Resource
 	private NeoImageRepository neoImageRepository;
+	
+	@Resource
+	private BmsProfileHistoryRepository bmsProfileMappingRepository;
 
 
 	public BmServerData addBmServer(AddBmServerForm addBmServerForm) {
@@ -88,14 +94,8 @@ public class BmServerHandler extends BaseHandler {
 				} else {
 					bmServer.setStatus("allocated");
 					bmServer = bmServerRepository.save(bmServer);
-//					ProjectData projectData = projectRepository.findOne(bmServer.getProjectId());
-//					int allocatedBmCount = projectData.getAllocatedBMs();
-//					projectData.setAllocatedBMs(++allocatedBmCount);
-//					int unAllocatedBmCount = projectData.getUnallocatedBMs();
-//					projectData.setUnallocatedBMs(--unAllocatedBmCount);
-//					projectRepository.save(projectData);
+					saveBmsProfileHistory(bmServer.getId(), neoProfileData.getId());
 				}
-				
 			}else {
 				bmServer.setStatus("Already allocated!!!");
 			}
@@ -140,5 +140,13 @@ public class BmServerHandler extends BaseHandler {
 		}
 		if (output != null && output.contains("exception on server"));
 		return output;
+	}
+	
+	public void saveBmsProfileHistory(Integer bmServreId, Integer profileId){
+		BmsProfileHistoryData mappingData = new BmsProfileHistoryData();
+		mappingData.setBmServerId(bmServreId);
+		mappingData.setProfileId(profileId);
+		mappingData.setAllocationDate(new Date());
+		bmsProfileMappingRepository.save(mappingData);
 	}
 }
