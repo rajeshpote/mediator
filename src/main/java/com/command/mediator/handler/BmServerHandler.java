@@ -94,7 +94,7 @@ public class BmServerHandler extends BaseHandler {
 				} else {
 					bmServer.setStatus("allocated");
 					bmServer = bmServerRepository.save(bmServer);
-					saveBmsProfileHistory(bmServer.getId(), neoProfileData.getId());
+					saveBmsProfileHistory(bmServer.getId(), neoBmProfileData.getId());
 				}
 			}else {
 				bmServer.setStatus("Already allocated!!!");
