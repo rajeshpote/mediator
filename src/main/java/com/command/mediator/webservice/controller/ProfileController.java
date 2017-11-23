@@ -71,13 +71,9 @@ public class ProfileController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<MediatorResponseModel> updateBmProfile(@PathVariable("id") String id, @Valid @RequestBody BmProfileForm profileForm,
-           BindingResult validationResults) {
+    public ResponseEntity<MediatorResponseModel> updateBmProfile(@PathVariable("id") String id, @RequestBody BmProfileForm bmProfileForm) {
 		try {
-			if (validationResults.hasErrors()) {
-				return prepareValidationErrorResponse(validationResults, 0);
-			}
-			NeoProfileData response = bmProfileHandler.saveBMProfile(profileForm);
+			NeoBmProfileData response = bmProfileHandler.updateBMProfile(id, bmProfileForm);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();

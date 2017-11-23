@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
+
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.command.mediator.persistent.BmsProfileHistoryRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
 import com.command.mediator.persistent.NeoProfileRepository;
+import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.BmsProfileHistoryData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoProfileData;
@@ -81,4 +84,16 @@ public class BMProfileHandler extends BaseHandler {
 		LOGGER.info("Returning Neo Profile list : {} ",profileData);
 		return profileData;
 	}
+
+	public NeoBmProfileData updateBMProfile(String id, BmProfileForm bmProfileForm) throws Exception {
+		NeoBmProfileData bmProfile = neoBmProfileRepository.findOne(Integer.valueOf(id));
+		if(Objects.isNull(bmProfile)){
+			throw new Exception("BM profile not present with the given id.");
+		}
+		bmProfile = updateBMProfile(bmProfile, bmProfileForm);
+		bmProfile = neoBmProfileRepository.save(bmProfile);
+		return bmProfile;
+	}
+
+	
 }

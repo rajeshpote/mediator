@@ -236,5 +236,25 @@ public class BaseHandler {
 		storageInfo.setMountPath(storageInfoForm.getMountPath());
 		return storageInfo;
 	}
+	
+	public NeoBmProfileData updateBMProfile(NeoBmProfileData bmProfile, BmProfileForm bmProfileForm) {
+		if (!StringUtils.isEmpty(bmProfileForm.getDiskPartType())) {
+			bmProfile.setDiskPartType(bmProfileForm.getDiskPartType());
+		}
+		if (!StringUtils.isEmpty(bmProfileForm.getImageId())) {
+			bmProfile.setImageId(bmProfileForm.getImageId());
+		}
+		if (!StringUtils.isEmpty(bmProfileForm.getKvm())) {
+			bmProfile.setKvm(bmProfileForm.getKvm());
+		}
+		if (!StringUtils.isEmpty(bmProfileForm.getNetType())) {
+			bmProfile.setNetType(bmProfileForm.getNetType());
+		}
+		if (!StringUtils.isEmpty(bmProfileForm.getPackages())) {
+			String packages = StringUtils.arrayToDelimitedString(bmProfileForm.getPackages().toArray(), ",");
+			bmProfile.setPackages(packages);
+		}
+		return bmProfile;
+	}
 
 }
