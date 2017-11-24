@@ -48,7 +48,7 @@ public class BaseController {
 	        metadataModel.setRequestId(null);
 	        metadataModel.setRequestParams(null);
 	       // metadataModel.setRequestTime(metadataModel.getRequestProcessingTime(requestStartTime));
-	        ServiceError errorObj = new ServiceError(throwable.getCause().getMessage(), code, fieldName);
+	        ServiceError errorObj = new ServiceError(throwable.getCause()!= null?throwable.getCause().getMessage():throwable.getMessage(), code, fieldName);
 	        MediatorResponseModel MediatorResponseModel = new MediatorResponseModel(null, metadataModel, errorObj);
 	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
