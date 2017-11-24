@@ -8,7 +8,6 @@ import org.springframework.util.StringUtils;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.NeoBmProfileData;
 import com.command.mediator.pojo.NeoImageData;
-import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.pojo.NetworkInfo;
 import com.command.mediator.pojo.PartitioningInfo;
 import com.command.mediator.pojo.ProjectData;
@@ -96,22 +95,16 @@ public class BaseHandler {
 		return addCobblercommand.toString();
 	}
 	
-	public NeoProfileData createBmProfileObject(BmProfileForm profileForm){
-		NeoProfileData bmProfile = new NeoProfileData();
-		bmProfile.setName(profileForm.getName());
-		bmProfile.setDescription(profileForm.getDescription());
-		bmProfile.setImageId(profileForm.getImageId());
-		//bmProfile.setKickstartFile(profileForm.getKickstartFile());
-		bmProfile.setCreatedBy(profileForm.getCreatedBy());
-		bmProfile.setCreatedOn(new Date());
-		return bmProfile;
-	}
 	
-	public NeoBmProfileData createBmNeoProfileObject(BmProfileForm profileForm, Integer neoProfileId){
+	public NeoBmProfileData createBmNeoProfileObject(BmProfileForm profileForm){
 		NeoBmProfileData neoBmProfile = new NeoBmProfileData();
 		List<PartitioningInfo> partitioningList = new ArrayList<PartitioningInfo>();
 		List<NetworkInfo> networkInfoList = new ArrayList<NetworkInfo>();
-		neoBmProfile.setNeoProfileId(neoProfileId);
+		neoBmProfile.setName(profileForm.getName());
+		neoBmProfile.setDescription(profileForm.getDescription());
+		neoBmProfile.setImageId(profileForm.getImageId());
+		neoBmProfile.setCreatedBy(profileForm.getCreatedBy());
+		neoBmProfile.setCreatedOn(new Date());
 		neoBmProfile.setImageId(profileForm.getImageId());
 		neoBmProfile.setKvm(profileForm.getKvm());
 		neoBmProfile.setDiskPartType(profileForm.getDiskPartType());

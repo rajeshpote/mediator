@@ -15,7 +15,7 @@ public class BaseController {
 	
 	public HttpHeaders addAccessControllAllowOrigin() {
 	        HttpHeaders headers = new HttpHeaders();
-	        headers.add("Access-Control-Allow-Origin", "*");
+	        headers.add("Access-Control-Allow-Methods", "PUT");
 	        return headers;
 	    }
 
@@ -29,7 +29,7 @@ public class BaseController {
 	        //metadataModel.setRequestTime(metadataModel.getRequestProcessingTime(requestStartTime));
 	        metadataModel.setSuccess(Boolean.TRUE);
 	        MediatorResponseModel MediatorResponseModel = new MediatorResponseModel(content == null ? null : contentModel, metadataModel, null);
-	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel, HttpStatus.OK);
+	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel,addAccessControllAllowOrigin(), HttpStatus.OK);
 	    }
 
 	    public ResponseEntity<MediatorResponseModel> prepareNullResponse(long requestStartTime) {
@@ -40,7 +40,7 @@ public class BaseController {
 	        metadataModel.setRequestTime(metadataModel.getRequestProcessingTime(requestStartTime));
 	        metadataModel.setSuccess(Boolean.TRUE);
 	        MediatorResponseModel MediatorResponseModel = new MediatorResponseModel(null, metadataModel, null);
-	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel, HttpStatus.OK);
+	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel,addAccessControllAllowOrigin(), HttpStatus.OK);
 	    }
 
 	    public ResponseEntity<MediatorResponseModel> prepareErrorResponse(Throwable throwable, int code, String fieldName) {
@@ -50,7 +50,7 @@ public class BaseController {
 	       // metadataModel.setRequestTime(metadataModel.getRequestProcessingTime(requestStartTime));
 	        ServiceError errorObj = new ServiceError(throwable.getCause()!= null?throwable.getCause().getMessage():throwable.getMessage(), code, fieldName);
 	        MediatorResponseModel MediatorResponseModel = new MediatorResponseModel(null, metadataModel, errorObj);
-	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel,addAccessControllAllowOrigin(), HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 
 	    public ResponseEntity<MediatorResponseModel> prepareErrorResponse(String errorMsg, HttpStatus status, String fieldName, long requestStartTime) {
@@ -60,7 +60,7 @@ public class BaseController {
 	        metadataModel.setRequestTime(metadataModel.getRequestProcessingTime(requestStartTime));
 	        ServiceError errorObj = new ServiceError(errorMsg, status.value(), fieldName);
 	        MediatorResponseModel MediatorResponseModel = new MediatorResponseModel(null, metadataModel, errorObj);
-	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel, status);
+	        return new ResponseEntity<MediatorResponseModel>(MediatorResponseModel,addAccessControllAllowOrigin(), status);
 	    }
 	    
 	    public ResponseEntity<MediatorResponseModel> prepareValidationErrorResponse(BindingResult validationResults, long requestStartTime) {

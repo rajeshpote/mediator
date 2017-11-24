@@ -17,7 +17,6 @@ import com.command.mediator.handler.BMProfileHandler;
 import com.command.mediator.handler.VmHandler;
 import com.command.mediator.model.MediatorResponseModel;
 import com.command.mediator.pojo.NeoBmProfileData;
-import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.pojo.VmDeployData;
 import com.command.mediator.webservice.form.BmProfileForm;
 import com.command.mediator.webservice.form.VmDeployForm;
@@ -40,7 +39,7 @@ public class ProfileController extends BaseController {
 			if (validationResults.hasErrors()) {
 				return prepareValidationErrorResponse(validationResults, 0);
 			}
-			NeoProfileData response = bmProfileHandler.saveBMProfile(profileForm);
+			NeoBmProfileData response = bmProfileHandler.saveBMProfile(profileForm);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();

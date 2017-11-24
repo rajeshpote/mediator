@@ -2,6 +2,7 @@ package com.command.mediator.pojo;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,13 +24,25 @@ public class NeoBmProfileData {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name = "neo_profile_id")
-	@JsonProperty("neo_profile_id")
-	private Integer neoProfileId;
-
 	@Column(name = "image_id")
 	@JsonProperty("image_id")
 	private String imageId;
+	
+	@Column(name = "name")
+	@JsonProperty("name")
+	private String name;
+	
+	@Column(name = "description")
+	@JsonProperty("description")
+	private String description;
+	
+	@Column(name = "created_by")
+	@JsonProperty("created_by")
+	private String createdBy;
+	
+	@Column(name = "created_on")
+	@JsonProperty("created_on")
+	private Date createdOn;
 	
 	@Column(name = "packages")
 	@JsonProperty("packages")
@@ -75,13 +88,6 @@ public class NeoBmProfileData {
 		this.imageId = imageId;
 	}
 	
-	public Integer getNeoProfileId() {
-		return neoProfileId;
-	}
-
-	public void setNeoProfileId(Integer neoProfileId) {
-		this.neoProfileId = neoProfileId;
-	}
 
 	public String getPackages() {
 		return packages;
@@ -131,11 +137,43 @@ public class NeoBmProfileData {
 		this.networkInfo = networkInfo;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	
 	@Override
 	public String toString() {
-		return "NeoBmProfileData [id=" + id + ", neoProfileId=" + neoProfileId + ", imageId=" + imageId + ", packages="
-				+ packages + ", kvm=" + kvm + ", netType=" + netType + ", diskPartType=" + diskPartType
-				+ ", partitioningInfo=" + partitioningInfo + ", networkInfo=" + networkInfo + "]";
+		return "NeoBmProfileData [id=" + id + ", imageId=" + imageId + ", name=" + name + ", description=" + description
+				+ "]";
 	}
 
 	@Override

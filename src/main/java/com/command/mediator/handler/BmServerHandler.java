@@ -17,11 +17,9 @@ import com.command.mediator.persistent.BmServerRepository;
 import com.command.mediator.persistent.BmsProfileHistoryRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
 import com.command.mediator.persistent.NeoImageRepository;
-import com.command.mediator.persistent.NeoProfileRepository;
 import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.BmsProfileHistoryData;
 import com.command.mediator.pojo.NeoBmProfileData;
-import com.command.mediator.pojo.NeoProfileData;
 import com.command.mediator.util.StringUtils;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.ProvisionBMServerForm;
@@ -39,9 +37,6 @@ public class BmServerHandler extends BaseHandler {
 
 	@Resource
 	private BmServerRepository bmServerRepository;
-
-	@Resource
-	private NeoProfileRepository neoProfileRepository;
 
 	@Resource
 	private NeoBmProfileRepository neoBmProfileRepository;
@@ -73,18 +68,14 @@ public class BmServerHandler extends BaseHandler {
 	public List<BmServerData> provisionBmServer(ProvisionBMServerForm provisionBMProfileForm) {
 		LOGGER.info("BM Server provision request: {} " + provisionBMProfileForm);
 		List<BmServerData> bmServerDataList = new ArrayList<BmServerData>();
-		NeoProfileData neoProfileData = neoProfileRepository.findOne(Integer.parseInt(provisionBMProfileForm.getProfileId()));
-		LOGGER.info("Loaded the neo profile : {} " + neoProfileData);
-		//NeoImageData neoImageData = neoImageRepository.findOne(Integer.parseInt(neoProfileData.getImageId()));
-		//LOGGER.info("Loaded the neo image : {} " + neoImageData);
-		NeoBmProfileData neoBmProfileData = neoBmProfileRepository.findByNeoProfileId(neoProfileData.getId());
+		NeoBmProfileData neoBmProfileData = neoBmProfileRepository.findOne(Integer.parseInt(provisionBMProfileForm.getProfileId()));
 		LOGGER.info("Loaded the neo bm profile : {} " + neoBmProfileData);
 		List<String> serverIds = provisionBMProfileForm.getServerId();
 		for (String serverId : serverIds) {
 			BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(serverId));
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
 			if ("free".equalsIgnoreCase(bmServer.getStatus())) {
-				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoProfileData.getImageId()+"-x86_64" + " " + bmServer.getPmType() + 
+				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoBmProfileData.getImageId()+"-x86_64" + " " + bmServer.getPmType() + 
 						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
 						+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm());
 				if (output != null && output.contains("exception on server")) {

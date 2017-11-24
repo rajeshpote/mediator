@@ -1,24 +1,19 @@
 package com.command.mediator.handler;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.command.mediator.persistent.BmsProfileHistoryRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
-import com.command.mediator.persistent.NeoProfileRepository;
-import com.command.mediator.pojo.BmServerData;
 import com.command.mediator.pojo.BmsProfileHistoryData;
 import com.command.mediator.pojo.NeoBmProfileData;
-import com.command.mediator.pojo.NeoProfileData;
-import com.command.mediator.webservice.controller.CobblerController;
 import com.command.mediator.webservice.form.BmProfileForm;
 
 @Service
@@ -27,29 +22,16 @@ public class BMProfileHandler extends BaseHandler {
 	private static Logger LOGGER = LoggerFactory.getLogger(BMProfileHandler.class);
 	
 	@Resource
-	private NeoProfileRepository neoProfileRepository;
-	
-	@Resource
 	private NeoBmProfileRepository neoBmProfileRepository;
 	
 	@Resource
 	private BmsProfileHistoryRepository bmsProfileMappingRepository;
 	
-	public NeoProfileData saveBMProfile(BmProfileForm profileForm) {
-		NeoProfileData bmProfile = createBmProfileObject(profileForm);
-		bmProfile = neoProfileRepository.save(bmProfile);
-		LOGGER.info("Neo Profile saved: {} " + bmProfile);
-		
-		NeoBmProfileData neoBmProfile = createBmNeoProfileObject(profileForm, bmProfile.getId());
+	public NeoBmProfileData saveBMProfile(BmProfileForm profileForm) {
+		NeoBmProfileData neoBmProfile = createBmNeoProfileObject(profileForm);
 		neoBmProfile = neoBmProfileRepository.save(neoBmProfile);
 		LOGGER.info("Neo BM Profile saved: {} " + neoBmProfile);
-		return bmProfile;
-	}
-
-	public List<NeoProfileData> getNeoProfile() {
-		List<NeoProfileData> bmProfileList = (List<NeoProfileData>) neoProfileRepository.findAll();
-		LOGGER.info("Neo Profile list found: {} " + bmProfileList);
-		return bmProfileList;
+		return neoBmProfile;
 	}
 
 	public List<NeoBmProfileData> getNeoBmProfile() {

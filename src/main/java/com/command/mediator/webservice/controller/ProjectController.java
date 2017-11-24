@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import com.command.mediator.pojo.ProjectData;
 import com.command.mediator.webservice.form.ProjectForm;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/mediator/v1/project", consumes = "application/json", produces = "application/json")
 public class ProjectController extends BaseController{
 	
