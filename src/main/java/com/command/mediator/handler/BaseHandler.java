@@ -237,24 +237,40 @@ public class BaseHandler {
 		return storageInfo;
 	}
 	
-	public NeoBmProfileData updateBMProfile(NeoBmProfileData bmProfile, BmProfileForm bmProfileForm) {
-		if (!StringUtils.isEmpty(bmProfileForm.getDiskPartType())) {
-			bmProfile.setDiskPartType(bmProfileForm.getDiskPartType());
+	public NeoBmProfileData updateBMProfile(NeoBmProfileData neoBmProfile, BmProfileForm profileForm) {
+		List<PartitioningInfo> partitioningList = new ArrayList<PartitioningInfo>();
+		List<NetworkInfo> networkInfoList = new ArrayList<NetworkInfo>();
+		if(com.command.mediator.util.StringUtils.isNotEmpty(profileForm.getImageId())){
+			neoBmProfile.setImageId(profileForm.getImageId());
 		}
-		if (!StringUtils.isEmpty(bmProfileForm.getImageId())) {
-			bmProfile.setImageId(bmProfileForm.getImageId());
+		if(profileForm.getKvm() != null){
+			neoBmProfile.setKvm(profileForm.getKvm());
 		}
-		if (!StringUtils.isEmpty(bmProfileForm.getKvm())) {
-			bmProfile.setKvm(bmProfileForm.getKvm());
+		if(com.command.mediator.util.StringUtils.isNotEmpty(profileForm.getDiskPartType())){
+			neoBmProfile.setDiskPartType(profileForm.getDiskPartType());
 		}
-		if (!StringUtils.isEmpty(bmProfileForm.getNetType())) {
-			bmProfile.setNetType(bmProfileForm.getNetType());
+		if(com.command.mediator.util.StringUtils.isNotEmpty(profileForm.getNetType())){
+			neoBmProfile.setNetType(profileForm.getNetType());
 		}
-		if (!StringUtils.isEmpty(bmProfileForm.getPackages())) {
-			String packages = StringUtils.arrayToDelimitedString(bmProfileForm.getPackages().toArray(), ",");
-			bmProfile.setPackages(packages);
+		if(profileForm.getPackages() !=null && !profileForm.getPackages().isEmpty()){
+			String packages = StringUtils.arrayToDelimitedString(profileForm.getPackages().toArray(), ",");
+			neoBmProfile.setPackages(packages);
 		}
-		return bmProfile;
+		if (profileForm.getPartitioningInfo() != null && !profileForm.getPartitioningInfo().isEmpty()) {
+			for (PartitioningInfoForm partitioningInfoForm : profileForm.getPartitioningInfo()) {
+				PartitioningInfo partitioningInfo = createPartitioningInfoObject(partitioningInfoForm);
+				partitioningList.add(partitioningInfo);
+			}
+			neoBmProfile.setPartitioningInfo(partitioningList);
+		}
+		if (profileForm.getNetworkInfo() != null && !profileForm.getNetworkInfo().isEmpty()) {
+			for (NetworkInfoForm networkInfoForm : profileForm.getNetworkInfo()) {
+				NetworkInfo networkInfo = createNetworkInfoObject(networkInfoForm);
+				networkInfoList.add(networkInfo);
+			}
+			neoBmProfile.setNetworkInfo(networkInfoList);
+		}
+		return neoBmProfile;
 	}
 	
 	public BmServerData updateSavedBm(BmServerData savedBmServer, String assignedIp, String status, String cpu,
