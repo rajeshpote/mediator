@@ -253,6 +253,9 @@ public class BaseHandler {
 		if(com.command.mediator.util.StringUtils.isNotEmpty(profileForm.getNetType())){
 			neoBmProfile.setNetType(profileForm.getNetType());
 		}
+		if(com.command.mediator.util.StringUtils.isNotEmpty(profileForm.getName())){
+			neoBmProfile.setName(profileForm.getName());
+		}
 		if(profileForm.getPackages() !=null && !profileForm.getPackages().isEmpty()){
 			String packages = StringUtils.arrayToDelimitedString(profileForm.getPackages().toArray(), ",");
 			neoBmProfile.setPackages(packages);

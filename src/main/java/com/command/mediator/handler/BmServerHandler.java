@@ -74,7 +74,7 @@ public class BmServerHandler extends BaseHandler {
 		for (String serverId : serverIds) {
 			BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(serverId));
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
-			if ("Failed".equalsIgnoreCase(bmServer.getStatus()) && "Free".equalsIgnoreCase(bmServer.getStatus())) {
+			if ("Failed".equalsIgnoreCase(bmServer.getStatus()) || "Free".equalsIgnoreCase(bmServer.getStatus())) {
 				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoBmProfileData.getImageId()+"-x86_64" + " " + bmServer.getPmType() + 
 						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
 						+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm());
