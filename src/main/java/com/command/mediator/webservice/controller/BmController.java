@@ -75,8 +75,8 @@ public class BmController extends BaseController{
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	//TODO: use RequestMethod.PUT once "Method PUT is not allowed by Access-Control-Allow-Methods in preflight response" issue is resolved
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public ResponseEntity<MediatorResponseModel> updateBmServer(@PathVariable("id") String id, @Valid @RequestBody AddBmServerForm addBmServerForm,
            BindingResult validationResults) {
 		try {

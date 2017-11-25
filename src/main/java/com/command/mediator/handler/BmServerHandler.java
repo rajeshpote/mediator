@@ -74,18 +74,19 @@ public class BmServerHandler extends BaseHandler {
 		for (String serverId : serverIds) {
 			BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(serverId));
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
-			if ("free".equalsIgnoreCase(bmServer.getStatus())) {
+			if ("Failed".equalsIgnoreCase(bmServer.getStatus()) && "Free".equalsIgnoreCase(bmServer.getStatus())) {
 				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoBmProfileData.getImageId()+"-x86_64" + " " + bmServer.getPmType() + 
 						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
 						+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm());
 				if (output != null && output.contains("exception on server")) {
-					bmServer.setStatus("Failed to provision:"+output);
+					bmServer.setStatus("Failed");
+					//throw new Exception("Failed to provision:"+output);
 				} else {
-					bmServer.setStatus("provisioning");
-					bmServer = bmServerRepository.save(bmServer);
+					bmServer.setStatus("Running");
 					saveBmsProfileHistory(bmServer.getId(), neoBmProfileData.getId());
 				}
-			}else {
+			bmServer = bmServerRepository.save(bmServer);	
+			} else {
 				bmServer.setStatus("This BM Server is not free right now");
 			}
 			bmServerDataList.add(bmServer);
@@ -100,6 +101,7 @@ public class BmServerHandler extends BaseHandler {
 		}
 		bmServer = updateBmServer(bmServer, addBmServerForm);
 		bmServer = bmServerRepository.save(bmServer);
+		LOGGER.info("Updated bm successfully:{}",bmServer);
 		return bmServer;
 	}
 

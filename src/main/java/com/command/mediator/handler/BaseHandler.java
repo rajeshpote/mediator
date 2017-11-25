@@ -109,7 +109,7 @@ public class BaseHandler {
 		neoBmProfile.setKvm(profileForm.getKvm());
 		neoBmProfile.setDiskPartType(profileForm.getDiskPartType());
 		neoBmProfile.setNetType(profileForm.getNetType());
-		if(!profileForm.getPackages().isEmpty()){
+		if(profileForm.getPackages() != null && !profileForm.getPackages().isEmpty()){
 			String packages = StringUtils.arrayToDelimitedString(profileForm.getPackages().toArray(), ",");
 			neoBmProfile.setPackages(packages);
 		}
@@ -166,7 +166,7 @@ public class BaseHandler {
 		bmServer.setPmPassword(addBmServerForm.getPmPassword());
 		bmServer.setProjectId(addBmServerForm.getProjectId());
 		bmServer.setCreatedDate(new Date());
-		bmServer.setStatus("free");
+		bmServer.setStatus("Free");
 		if(addBmServerForm.getNetworks() != null){
 			bmServer.setNetworks(addBmServerForm.getNetworks());
 		}
@@ -186,6 +186,7 @@ public class BaseHandler {
 	}
 	
 	public BmServerData updateBmServer(BmServerData bmServer, AddBmServerForm addBmServerForm) {
+		bmServer.setModifiedDate(new Date());
 		if (!StringUtils.isEmpty(addBmServerForm.getName())) {
 			bmServer.setName(addBmServerForm.getName());
 		}
@@ -206,6 +207,12 @@ public class BaseHandler {
 		}
 		if (addBmServerForm.getProjectId() != null) {
 			bmServer.setProjectId(addBmServerForm.getProjectId());
+		}
+		if (addBmServerForm.getDisks() != null) {
+			bmServer.setDisks(addBmServerForm.getDisks());
+		}
+		if (addBmServerForm.getNetworks() != null) {
+			bmServer.setNetworks(addBmServerForm.getNetworks());
 		}
 		return bmServer;
 	}
@@ -231,6 +238,7 @@ public class BaseHandler {
 	}
 	
 	public NeoBmProfileData updateBMProfile(NeoBmProfileData neoBmProfile, BmProfileForm profileForm) {
+		neoBmProfile.setModifiedOn(new Date());
 		List<PartitioningInfo> partitioningList = new ArrayList<PartitioningInfo>();
 		List<NetworkInfo> networkInfoList = new ArrayList<NetworkInfo>();
 		if(com.command.mediator.util.StringUtils.isNotEmpty(profileForm.getImageId())){

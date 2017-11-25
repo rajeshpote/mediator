@@ -27,6 +27,19 @@ public class NeoImageForm {
 	
 	@JsonProperty("file") 
 	private MultipartFile file;
+	
+
+	public NeoImageForm() {
+		super();
+	}
+
+	public NeoImageForm(String imageName, String description, String osType, MultipartFile file) {
+		super();
+		this.imageName = imageName;
+		this.description = description;
+		this.osType = osType;
+		this.file = file;
+	}
 
 	public String getImageName() {
 		return imageName;

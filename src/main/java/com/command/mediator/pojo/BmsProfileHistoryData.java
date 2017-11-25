@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -29,6 +30,7 @@ public class BmsProfileHistoryData {
 	
 	@Column(name = "allocation_date")
 	@JsonProperty("allocation_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy")
 	private Date allocationDate;
 	
 	public Date getAllocationDate() {

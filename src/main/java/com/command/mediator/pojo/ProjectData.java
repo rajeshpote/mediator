@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -48,6 +49,7 @@ public class ProjectData implements Comparable<ProjectData>{
 	
 	@Column(name = "created_on")
 	@JsonProperty("created_on")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy")
 	private Date createdOn ;
 
 	public Integer getId() {

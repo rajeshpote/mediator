@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
@@ -42,7 +44,13 @@ public class NeoBmProfileData {
 	
 	@Column(name = "created_on")
 	@JsonProperty("created_on")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy")
 	private Date createdOn;
+	
+	@Column(name = "modified_on")
+	@JsonProperty("modified_on")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy")
+	private Date modifiedOn;
 	
 	@Column(name = "packages")
 	@JsonProperty("packages")
@@ -168,8 +176,15 @@ public class NeoBmProfileData {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
 	
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
 	@Override
 	public String toString() {
 		return "NeoBmProfileData [id=" + id + ", imageId=" + imageId + ", name=" + name + ", description=" + description

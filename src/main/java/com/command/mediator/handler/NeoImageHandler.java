@@ -67,4 +67,14 @@ public class NeoImageHandler extends BaseHandler {
 		return data;
 	}
 
+	public NeoImageData uploadImage(MultipartFile file, String imageName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String deleteImage(String imageId) {
+		neoImageRepository.delete(Integer.valueOf(imageId));
+		return "Success";
+	}
+
 }

@@ -68,8 +68,9 @@ public class ProfileController extends BaseController {
 			return prepareErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+
+	//TODO: use RequestMethod.PUT once "Method PUT is not allowed by Access-Control-Allow-Methods in preflight response" issue is resolved
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public ResponseEntity<MediatorResponseModel> updateBmProfile(@PathVariable("id") String id, @RequestBody BmProfileForm bmProfileForm) {
 		try {
 			NeoBmProfileData response = bmProfileHandler.updateBMProfile(id, bmProfileForm);
