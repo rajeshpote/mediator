@@ -29,8 +29,6 @@ public class BmServerHandler extends BaseHandler {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(BmServerHandler.class);
 
-	private String PROV_COMMAND = "./scripts/provBmServer.sh";
-	
 	private String STOP_SERVER_COMMAND = "./scripts/stopProvBmServer.sh";
 	
 	private String DEPROVISION_SERVER_COMMAND = "/home/neo/scripts/deProvBmServer.sh ";
@@ -48,8 +46,8 @@ public class BmServerHandler extends BaseHandler {
 	private NeoImageRepository neoImageRepository;
 	
 	@Resource
-	private BmsProfileHistoryRepository bmsProfileMappingRepository;
-
+	private AsyncHandler asyncHandler;
+	
 
 	public BmServerData addBmServer(AddBmServerForm addBmServerForm) {
 		BmServerData bmServer = createBmServerObject(addBmServerForm);
@@ -75,17 +73,8 @@ public class BmServerHandler extends BaseHandler {
 			BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(serverId));
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
 			if ("Failed".equalsIgnoreCase(bmServer.getStatus()) || "Free".equalsIgnoreCase(bmServer.getStatus())) {
-				String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoBmProfileData.getImageId()+"-x86_64" + " " + bmServer.getPmType() + 
-						" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
-						+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm());
-				if (output != null && output.contains("exception on server")) {
-					bmServer.setStatus("Failed");
-					//throw new Exception("Failed to provision:"+output);
-				} else {
-					bmServer.setStatus("Running");
-					saveBmsProfileHistory(bmServer.getId(), neoBmProfileData.getId());
-				}
-			bmServer = bmServerRepository.save(bmServer);	
+				// Async call
+				asyncHandler.provBmServer(bmServer, neoBmProfileData);
 			} else {
 				bmServer.setStatus("This BM Server is not free right now");
 			}
@@ -139,14 +128,6 @@ public class BmServerHandler extends BaseHandler {
 		return bmServer;
 	}
 	
-	public void saveBmsProfileHistory(Integer bmServreId, Integer profileId){
-		BmsProfileHistoryData mappingData = new BmsProfileHistoryData();
-		mappingData.setBmServerId(bmServreId);
-		mappingData.setProfileId(profileId);
-		mappingData.setAllocationDate(new Date());
-		bmsProfileMappingRepository.save(mappingData);
-	}
-
 	public BmServerData updateBm(String bmName, String assignedIp, String status, String cpu, String memory,
 			String logpath, String username, String password) {
 		BmServerData savedBmServer = bmServerRepository.findByName(bmName);
