@@ -105,7 +105,6 @@ public class BmServerHandler extends BaseHandler {
 			throw new Exception("Server name must be specified.");
 		}
 		output = CommandExecutor.execute(STOP_SERVER_COMMAND + " " + serverName);
-		if (output != null && output.contains("exception on server"));
 		return output;
 	}
 
@@ -115,10 +114,14 @@ public class BmServerHandler extends BaseHandler {
 			throw new Exception("Server name must be specified.");
 		}
 		String[] servers = serverNames.split(",");
-		for(int i = 0 ; i < servers.length ; i++){
-			output = CommandExecutor.execute(DEPROVISION_SERVER_COMMAND + servers[i]);	
+		for (int i = 0; i < servers.length; i++) {
+			output = CommandExecutor.execute(DEPROVISION_SERVER_COMMAND + servers[i]);
+			if (output != null && !output.contains("exception on server")) {
+				BmServerData bmServer = bmServerRepository.findByName(servers[i]);
+				bmServer.setStatus("Free");
+				bmServerRepository.save(bmServer);
+			}
 		}
-		if (output != null && output.contains("exception on server"));
 		return output;
 	}
 

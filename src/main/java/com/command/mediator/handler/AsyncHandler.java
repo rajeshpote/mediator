@@ -39,7 +39,7 @@ public class AsyncHandler {
 				bmServer.setStatus("Failed");
 				//throw new Exception("Failed to provision:"+output);
 			} else {
-				bmServer.setStatus("Running");
+				bmServer.setStatus("Deployed");
 				saveBmsProfileHistory(bmServer.getId(), neoBmProfileData.getId());
 			}
 		bmServer = bmServerRepository.save(bmServer);
