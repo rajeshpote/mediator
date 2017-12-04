@@ -19,7 +19,7 @@ import com.command.mediator.pojo.NeoBmProfileData;
 @Component
 public class AsyncHandler {
 
-	private String PROV_COMMAND = "./scripts/provBmServer.sh";
+	private String PROV_COMMAND = "/home/neo/scripts/provBmServer.sh";
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(AsyncHandler.class);
 	

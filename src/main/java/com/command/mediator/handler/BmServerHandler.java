@@ -29,7 +29,7 @@ public class BmServerHandler extends BaseHandler {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(BmServerHandler.class);
 
-	private String STOP_SERVER_COMMAND = "./scripts/stopProvBmServer.sh";
+	private String STOP_SERVER_COMMAND = "/home/neo/scripts/stopProvBmServer.sh";
 	
 	private String DEPROVISION_SERVER_COMMAND = "/home/neo/scripts/deProvBmServer.sh ";
 

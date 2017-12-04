@@ -23,7 +23,7 @@ public class NeoImageHandler extends BaseHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CobblerHandler.class);
 	
-	private String MOUNT_COMMAND = "./scripts/mountImage.sh";
+	private String MOUNT_COMMAND = "/home/neo/scripts/mountImage.sh";
 	
 	@Resource
 	private NeoImageRepository neoImageRepository;
