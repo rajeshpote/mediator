@@ -14,12 +14,11 @@ import org.springframework.stereotype.Service;
 
 import com.command.mediator.cmn.CommandExecutor;
 import com.command.mediator.persistent.BmServerRepository;
-import com.command.mediator.persistent.BmsProfileHistoryRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
 import com.command.mediator.persistent.NeoImageRepository;
 import com.command.mediator.pojo.BmServerData;
-import com.command.mediator.pojo.BmsProfileHistoryData;
 import com.command.mediator.pojo.NeoBmProfileData;
+import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.util.StringUtils;
 import com.command.mediator.webservice.form.AddBmServerForm;
 import com.command.mediator.webservice.form.ProvisionBMServerForm;
@@ -68,13 +67,15 @@ public class BmServerHandler extends BaseHandler {
 		List<BmServerData> bmServerDataList = new ArrayList<BmServerData>();
 		NeoBmProfileData neoBmProfileData = neoBmProfileRepository.findOne(Integer.parseInt(provisionBMProfileForm.getProfileId()));
 		LOGGER.info("Loaded the neo bm profile : {} " + neoBmProfileData);
+		NeoImageData image = neoImageRepository.findOne(Integer.parseInt(neoBmProfileData.getImageId()));
+		LOGGER.info("Loaded the neo image : {} " + image);
 		List<String> serverIds = provisionBMProfileForm.getServerId();
 		for (String serverId : serverIds) {
 			BmServerData bmServer = bmServerRepository.findOne(Integer.parseInt(serverId));
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
 			if ("Failed".equalsIgnoreCase(bmServer.getStatus()) || "Free".equalsIgnoreCase(bmServer.getStatus())) {
 				// Async call
-				asyncHandler.provBmServer(bmServer, neoBmProfileData);
+				asyncHandler.provBmServer(bmServer, neoBmProfileData,image.getOsType());
 			} else {
 				bmServer.setStatus("This BM Server is not free right now");
 			}

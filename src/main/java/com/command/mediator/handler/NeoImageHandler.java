@@ -44,6 +44,16 @@ public class NeoImageHandler extends BaseHandler {
 		
 	}
 	
+	public NeoImageData saveImage(NeoImageForm neoImageForm) {
+		NeoImageData neoImage = createImageObject(neoImageForm);
+		neoImage = neoImageRepository.save(neoImage);
+		LOGGER.info("Running mount script");
+		CommandExecutor.execute(MOUNT_COMMAND + " " + neoImage.getImageName() + " " + neoImage.getId());
+		LOGGER.info("Mounted the image: {} ", neoImage);
+		return neoImage;
+
+	}
+	
 	private boolean storeFile(MultipartFile file,String location){
 		try {
 			Path rootLocation = Paths.get(location);

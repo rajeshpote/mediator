@@ -30,11 +30,11 @@ public class AsyncHandler {
 	private BmsProfileHistoryRepository bmsProfileMappingRepository;
 
 	@Async("AsyncTaskExecutor")
-	public void provBmServer(BmServerData bmServer,NeoBmProfileData neoBmProfileData) {
+	public void provBmServer(BmServerData bmServer,NeoBmProfileData neoBmProfileData,String osType) {
 		try {
 			String output = CommandExecutor.execute(PROV_COMMAND + " " + bmServer.getName() + " " + neoBmProfileData.getImageId()+"-x86_64" + " " + bmServer.getPmType() + 
 					" " + bmServer.getPmAddress() + " " + bmServer.getPmName() + " " + bmServer.getPmPassword() + " " + "enp1s0f1" + " " 
-					+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm());
+					+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm()+" "+osType);
 			if (output != null && output.contains("exception on server")) {
 				bmServer.setStatus("Failed");
 				//throw new Exception("Failed to provision:"+output);
