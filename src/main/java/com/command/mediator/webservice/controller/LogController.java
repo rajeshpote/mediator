@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.command.mediator.handler.LogHandler;
@@ -26,9 +27,9 @@ public class LogController extends BaseController{
 	private LogHandler logHandler;
 	
 	@RequestMapping( method = RequestMethod.GET)
-	public ResponseEntity<MediatorResponseModel> getLogs() {
+	public ResponseEntity<MediatorResponseModel> getLogs(@RequestParam(name="server-name") String serverName) {
 		try {
-			String response = logHandler.getLogs();
+			String response = logHandler.getLogs(serverName);
 			return prepareSuccessResponse(response, 1);
 		} catch (Throwable e) {
 			e.printStackTrace();

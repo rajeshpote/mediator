@@ -11,10 +11,10 @@ public class LogHandler {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(LogHandler.class);
 
-	private String GET_LOGS_COMMAND = "/home/neo/scripts/getLogs.sh";
+	private String GET_LOGS_COMMAND = "/home/neo/scripts/getLogs.sh ";
 	
-	public String getLogs() {
-		String output = CommandExecutor.execute(GET_LOGS_COMMAND);
+	public String getLogs(String serverName) {
+		String output = CommandExecutor.execute(GET_LOGS_COMMAND+serverName);
 		LOGGER.info("Logs {} : "+ output);
 		return output;
 	}
