@@ -93,7 +93,7 @@ public class BmServerHandler extends BaseHandler {
 		} catch (NumberFormatException ne) {
 			LOGGER.info("Imgae id is not number..so finding using image name");
 			NeoImageData image = neoImageRepository.findByImageName(imageId);
-			return image;
+			return image!=null?image:new NeoImageData();
 		}
 	}
 

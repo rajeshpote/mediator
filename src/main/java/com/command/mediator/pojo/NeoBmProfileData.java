@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,6 +30,10 @@ public class NeoBmProfileData {
 	@Column(name = "image_id")
 	@JsonProperty("image_id")
 	private String imageId;
+	
+	@Transient
+	@JsonProperty("image_name")
+	private String imageName;
 	
 	@Column(name = "name")
 	@JsonProperty("name")
@@ -183,6 +188,14 @@ public class NeoBmProfileData {
 
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
 	@Override

@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.command.mediator.persistent.BmsProfileHistoryRepository;
 import com.command.mediator.persistent.NeoBmProfileRepository;
+import com.command.mediator.persistent.NeoImageRepository;
 import com.command.mediator.pojo.BmsProfileHistoryData;
 import com.command.mediator.pojo.NeoBmProfileData;
+import com.command.mediator.pojo.NeoImageData;
 import com.command.mediator.webservice.form.BmProfileForm;
 
 @Service
@@ -27,6 +29,9 @@ public class BMProfileHandler extends BaseHandler {
 	@Resource
 	private BmsProfileHistoryRepository bmsProfileMappingRepository;
 	
+	@Resource
+	private NeoImageRepository neoImageRepository;
+	
 	public NeoBmProfileData saveBMProfile(BmProfileForm profileForm) {
 		NeoBmProfileData neoBmProfile = createBmNeoProfileObject(profileForm);
 		neoBmProfile = neoBmProfileRepository.save(neoBmProfile);
@@ -36,6 +41,10 @@ public class BMProfileHandler extends BaseHandler {
 
 	public List<NeoBmProfileData> getNeoBmProfile() {
 		List<NeoBmProfileData> bmProfileList = (List<NeoBmProfileData>) neoBmProfileRepository.findAll();
+		for (NeoBmProfileData neoBmProfileData : bmProfileList) {
+			NeoImageData image = getImageData(neoBmProfileData.getImageId());
+			neoBmProfileData.setImageName(image.getImageName());
+		}
 		LOGGER.info("Neo BM Profile list found: {} " + bmProfileList);
 		return bmProfileList;
 	}
@@ -47,6 +56,8 @@ public class BMProfileHandler extends BaseHandler {
 
 	public NeoBmProfileData getProfile(String profileId) {
 		NeoBmProfileData neoBmProfile = neoBmProfileRepository.findOne(Integer.valueOf(profileId));
+		NeoImageData image = getImageData(neoBmProfile.getImageId());
+		neoBmProfile.setImageName(image.getImageName());
 		return neoBmProfile;
 	}
 
@@ -55,11 +66,16 @@ public class BMProfileHandler extends BaseHandler {
 		LOGGER.info("Neo Profile list for allocated BM server : {} "+profileHistoryList);
 		List<NeoBmProfileData> profileData = new ArrayList<NeoBmProfileData>();
 		for (BmsProfileHistoryData profileHistory : profileHistoryList) {
-			profileData.add(neoBmProfileRepository.findOne(profileHistory.getProfileId()));
+			NeoBmProfileData neoBmProfileData = neoBmProfileRepository.findOne(profileHistory.getProfileId());
+			NeoImageData image = getImageData(neoBmProfileData.getImageId());
+			neoBmProfileData.setImageName(image.getImageName());
+			profileData.add(neoBmProfileData);
 		}
 		List<NeoBmProfileData> profiles = (List<NeoBmProfileData>) neoBmProfileRepository.findAll();
 		for (NeoBmProfileData neoBmProfileData : profiles) {
 			if(!profileData.equals(neoBmProfileData)){
+				NeoImageData image = getImageData(neoBmProfileData.getImageId());
+				neoBmProfileData.setImageName(image.getImageName());
 				profileData.add(neoBmProfileData);
 			}
 		}
@@ -75,6 +91,16 @@ public class BMProfileHandler extends BaseHandler {
 		bmProfile = updateBMProfile(bmProfile, bmProfileForm);
 		bmProfile = neoBmProfileRepository.save(bmProfile);
 		return bmProfile;
+	}
+	private NeoImageData getImageData(String imageId) {
+		try {
+			NeoImageData image = neoImageRepository.findOne(Integer.parseInt(imageId));
+			return image;
+		} catch (NumberFormatException ne) {
+			LOGGER.info("Imgae id is not number..so finding using image name");
+			NeoImageData image = neoImageRepository.findByImageName(imageId);
+			return image!=null?image:new NeoImageData();
+		}
 	}
 
 	
