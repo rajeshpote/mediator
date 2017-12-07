@@ -29,7 +29,7 @@ public class BmServerHandler extends BaseHandler {
 	private static Logger LOGGER = LoggerFactory.getLogger(BmServerHandler.class);
 
 	private String STOP_SERVER_COMMAND = "/home/neo/scripts/stopProvBmServer.sh";
-	
+
 	private String DEPROVISION_SERVER_COMMAND = "/home/neo/scripts/deProvBmServer.sh ";
 
 	@Resource
@@ -40,13 +40,12 @@ public class BmServerHandler extends BaseHandler {
 
 	@Resource
 	private CommandExecutor commandExecutor;
-	
+
 	@Resource
 	private NeoImageRepository neoImageRepository;
-	
+
 	@Resource
 	private AsyncHandler asyncHandler;
-	
 
 	public BmServerData addBmServer(AddBmServerForm addBmServerForm) {
 		BmServerData bmServer = createBmServerObject(addBmServerForm);
@@ -54,7 +53,7 @@ public class BmServerHandler extends BaseHandler {
 		LOGGER.info("BM Server added: {} " + bmServer);
 		return bmServer;
 	}
-	
+
 	public List<BmServerData> getBmServer() {
 		List<BmServerData> bmServerList = (List<BmServerData>) bmServerRepository.findAll();
 		Collections.sort(bmServerList);
@@ -65,9 +64,10 @@ public class BmServerHandler extends BaseHandler {
 	public List<BmServerData> provisionBmServer(ProvisionBMServerForm provisionBMProfileForm) {
 		LOGGER.info("BM Server provision request: {} " + provisionBMProfileForm);
 		List<BmServerData> bmServerDataList = new ArrayList<BmServerData>();
-		NeoBmProfileData neoBmProfileData = neoBmProfileRepository.findOne(Integer.parseInt(provisionBMProfileForm.getProfileId()));
+		NeoBmProfileData neoBmProfileData = neoBmProfileRepository
+				.findOne(Integer.parseInt(provisionBMProfileForm.getProfileId()));
 		LOGGER.info("Loaded the neo bm profile : {} " + neoBmProfileData);
-		NeoImageData image = neoImageRepository.findOne(Integer.parseInt(neoBmProfileData.getImageId()));
+		NeoImageData image = getImageData(neoBmProfileData.getImageId());
 		LOGGER.info("Loaded the neo image : {} " + image);
 		List<String> serverIds = provisionBMProfileForm.getServerId();
 		for (String serverId : serverIds) {
@@ -75,7 +75,9 @@ public class BmServerHandler extends BaseHandler {
 			LOGGER.info("Loaded the bm server : {} " + bmServer);
 			if ("Failed".equalsIgnoreCase(bmServer.getStatus()) || "Free".equalsIgnoreCase(bmServer.getStatus())) {
 				// Async call
-				asyncHandler.provBmServer(bmServer, neoBmProfileData,image.getOsType());
+				asyncHandler.provBmServer(bmServer, neoBmProfileData, image.getOsType());
+				bmServer.setStatus("Deploying");
+				bmServer = bmServerRepository.save(bmServer);
 			} else {
 				bmServer.setStatus("This BM Server is not free right now");
 			}
@@ -84,14 +86,25 @@ public class BmServerHandler extends BaseHandler {
 		return bmServerDataList;
 	}
 
+	private NeoImageData getImageData(String imageId) {
+		try {
+			NeoImageData image = neoImageRepository.findOne(Integer.parseInt(imageId));
+			return image;
+		} catch (NumberFormatException ne) {
+			LOGGER.info("Imgae id is not number..so finding using image name");
+			NeoImageData image = neoImageRepository.findByImageName(imageId);
+			return image;
+		}
+	}
+
 	public BmServerData updateBmServer(String id, AddBmServerForm addBmServerForm) throws Exception {
 		BmServerData bmServer = bmServerRepository.findOne(Integer.valueOf(id));
-		if(Objects.isNull(bmServer)){
+		if (Objects.isNull(bmServer)) {
 			throw new Exception("BM Sever not present with the given id.");
 		}
 		bmServer = updateBmServer(bmServer, addBmServerForm);
 		bmServer = bmServerRepository.save(bmServer);
-		LOGGER.info("Updated bm successfully:{}",bmServer);
+		LOGGER.info("Updated bm successfully:{}", bmServer);
 		return bmServer;
 	}
 
@@ -99,10 +112,10 @@ public class BmServerHandler extends BaseHandler {
 		bmServerRepository.delete(id);
 		LOGGER.info("Deleted bm server for id : {} ");
 	}
-	
-	public String stopBmServer(String serverName) throws Exception{
+
+	public String stopBmServer(String serverName) throws Exception {
 		String output = null;
-		if(StringUtils.isEmpty(serverName)){
+		if (StringUtils.isEmpty(serverName)) {
 			throw new Exception("Server name must be specified.");
 		}
 		output = CommandExecutor.execute(STOP_SERVER_COMMAND + " " + serverName);
@@ -111,7 +124,7 @@ public class BmServerHandler extends BaseHandler {
 
 	public String deprovisionBmServer(String serverNames) throws Exception {
 		String output = null;
-		if(StringUtils.isEmpty(serverNames)){
+		if (StringUtils.isEmpty(serverNames)) {
 			throw new Exception("Server name must be specified.");
 		}
 		String[] servers = serverNames.split(",");
@@ -131,11 +144,11 @@ public class BmServerHandler extends BaseHandler {
 		LOGGER.info("BM Server found: {} " + bmServer);
 		return bmServer;
 	}
-	
+
 	public BmServerData updateBm(String bmName, String assignedIp, String status, String cpu, String memory,
 			String logpath, String username, String password) {
 		BmServerData savedBmServer = bmServerRepository.findByName(bmName);
-		savedBmServer = updateSavedBm(savedBmServer,assignedIp,status,cpu,memory,logpath,username,password);
+		savedBmServer = updateSavedBm(savedBmServer, assignedIp, status, cpu, memory, logpath, username, password);
 		bmServerRepository.save(savedBmServer);
 		return savedBmServer;
 	}

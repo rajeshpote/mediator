@@ -37,12 +37,13 @@ public class AsyncHandler {
 					+ bmServer.getInterfaceMac()+" "+neoBmProfileData.getNetType()+" "+neoBmProfileData.getDiskPartType()+" "+neoBmProfileData.getKvm()+" "+osType);
 			if (output != null && output.contains("exception on server")) {
 				bmServer.setStatus("Failed");
+				bmServer = bmServerRepository.save(bmServer);
 				//throw new Exception("Failed to provision:"+output);
-			} else {
+			} /*else {
 				bmServer.setStatus("Deploying");
 				saveBmsProfileHistory(bmServer.getId(), neoBmProfileData.getId());
-			}
-		bmServer = bmServerRepository.save(bmServer);
+			}*/
+		
 		} catch (Throwable e) {
 			LOGGER.error("Error while publishing msg to oka:{}", e);
 			e.printStackTrace();

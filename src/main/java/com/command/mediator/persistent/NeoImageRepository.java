@@ -7,5 +7,5 @@ import com.command.mediator.pojo.NeoImageData;
 
 @Repository
 public interface NeoImageRepository extends CrudRepository<NeoImageData, Integer>{
-
+	public NeoImageData findByImageName(String name);
 }
